@@ -11,10 +11,12 @@
     <div class="container-fluid">
         <div class="card shadow mb-4">
             <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                <div>
+                    <table class="table table-bordered table-striped table-hover table-responsive text-nowrap" id="dataTable"
+                        width="100%" cellspacing="0">
                         <thead>
                             <tr class="text-center">
+                                <th>No.</th>
                                 <th>NIK</th>
                                 <th>Nama</th>
                                 <th>Jenis Kelamin</th>
@@ -29,35 +31,52 @@
                             </tr>
                         </thead>
                         <tbody class="text-center">
-                            @if (count($residents) > 0)
-                                @foreach ($residents as $item)
-                                    <tr>
-                                        <td>{{ $item->nik }}</td>
-                                        <td>{{ $item->name }}</td>
-                                        <td>{{ $item->gender }}</td>
-                                        <td>{{ $item->birth_place }}, {{ $item->birth_date }}</td>
-                                        <td>{{ $item->address }}</td>
-                                        <td>{{ $item->religion }}</td>
-                                        <td>{{ $item->marital_status }}</td>
-                                        <td>{{ $item->occupation }}</td>
-                                        <td>{{ $item->phone }}</td>
-                                        <td>{{ $item->status }}</td>
-                                        <td>
-                                            <div class="d-flex">
-                                                <a href="/resident/{{ $item->id }}"
-                                                    class="d-inline-block mr-2 btn btn-warning"><i
-                                                        class="fas fa-edit"></i></a>
-                                                <a href="/resident/{{ $item->id }}" class="btn btn-danger"><i
-                                                        class="fas fa-trash"></i></a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @else
+                            @forelse($residents as $item)
                                 <tr>
-                                    <td colspan="11" class="text-center">Data Kosong</td>
+                                    <td class="align-middle">{{ $loop->iteration }}</td>
+                                    <td class="align-middle">{{ $item->nik }}</td>
+                                    <td class="align-middle">
+                                        <span class="font-weight-bold text-dark">{{ $item->name }}</span>
+                                    </td>
+                                    <td class="align-middle">
+                                        @if ($item->gender == 'male')
+                                            <span class="badge badge-primary">Laki-laki</span>
+                                        @else
+                                            <span class="badge badge-warning">Perempuan</span>
+                                        @endif
+                                    </td>
+                                    <td class="align-middle">{{ $item->birth_place }},
+                                        {{ date('d-m-Y', strtotime($item->birth_date)) }}</td>
+                                    <td class="align-middle">{{ $item->address }}</td>
+                                    <td class="align-middle">{{ $item->religion }}</td>
+                                    <td class="align-middle">
+                                        {{ $item->marital_status }}
+                                    </td>
+                                    <td class="align-middle">{{ $item->occupation }}</td>
+                                    <td class="align-middle">{{ $item->phone }}</td>
+                                    <td class="align-middle">
+                                        {{ $item->status }}
+                                    </td>
+                                    <td class="text-center align-middle">
+                                        <a href="/resident/{{ $item->id }}"
+                                            class="d-inline-block mr-2 btn btn-warning btn-circle btn-sm"><i
+                                                class="fas fa-edit"></i></a>
+                                        <button type="button" class="btn btn-danger btn-circle btn-sm"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#confirmationDelete-{{ $item->id }}"><i
+                                                class="fas fa-trash"></i></button>
+                                    </td>
                                 </tr>
-                            @endif
+                                @include('pages.resident.confirmation-delete')
+                            @empty
+                                <tr>
+                                    <td colspan="12" class="text-center">
+                                        <img src="{{ asset('template/img/undraw_posting_photo.svg') }}" alt="No Data"
+                                            style="height: 100px;" class="mb-3 d-block mx-auto">
+                                        <h6 class="text-gray-500">Data penduduk belum tersedia.</h6>
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
@@ -65,3 +84,28 @@
         </div>
     </div>
 @endsection
+
+{{-- PUSH SCRIPTS & STYLES AGAR DATATABLES BERFUNGSI --}}
+@push('styles')
+    <link href="{{ asset('template/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+@endpush
+
+@push('scripts')
+    <script src="{{ asset('template/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('template/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#dataTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Indonesian.json" // Mengubah bahasa ke Indonesia
+                },
+                "columnDefs": [{
+                        "orderable": false,
+                        "targets": 5
+                    } // Mematikan fitur sort di kolom Aksi
+                ]
+            });
+        });
+    </script>
+@endpush

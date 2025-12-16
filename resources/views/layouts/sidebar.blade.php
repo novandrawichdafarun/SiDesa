@@ -1,10 +1,10 @@
-<ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard">
-        <div class="sidebar-brand-icon rotate-n-15">
-            {{-- <i class="fas fa-laugh-wink"></i> --}}
-        </div>
+        {{-- <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-laugh-wink"></i>
+        </div> --}}
         <div class="sidebar-brand-text mx-3">SiDesa</div>
     </a>
 
@@ -12,7 +12,7 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item {{ request()->is('dashboard') ? 'active' : '' }}">
+    <li class="nav-item my-1 {{ request()->is('dashboard') ? 'active' : '' }}">
         <a class="nav-link" href="/dashboard">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
@@ -22,13 +22,13 @@
     <hr class="sidebar-divider">
 
     <!-- Heading -->
-    <div class="sidebar-heading">
+    <div class="sidebar-heading my-2">
         Manajemen Data
     </div>
 
 
     <!-- Nav Item - Tables -->
-    <li class="nav-item {{ request()->is('resident') ? 'active' : '' }}">
+    <li class="nav-item my-2 {{ request()->is('resident') ? 'active' : '' }}">
         <a class="nav-link" href="/resident">
             <i class="fas fa-fw fa-table"></i>
             <span>Penduduk</span></a>
