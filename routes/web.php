@@ -17,11 +17,11 @@ Route::get('/dashboard', function () {
 })->middleware('role:Admin,User');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/account-request', [UserController::class, 'accountRequestView'])->name('account-request.index');
-    Route::post('/account-request/approval/{id}', [UserController::class, 'accountApproval'])->name('account-request.approval');
-});
+    Route::get('/account-request', [UserController::class, 'accountRequestView'])
+        ->name('account-request.index');
+    Route::post('/account-request/approval/{id}', [UserController::class, 'accountApproval'])
+        ->name('account-request.approval');
 
-Route::middleware(['auth'])->group(function () {
     Route::get('/account-list', [UserController::class, 'accountListView'])
         ->name('account-list.index')
         ->middleware('role:Admin');
@@ -33,6 +33,16 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/account-list/approval/{id}', [UserController::class, 'accountApproval'])
         ->name('account-list.approval')
         ->middleware('role:Admin');
+
+    Route::get('/profile', [UserController::class, 'profileView'])
+        ->name('profile.index');
+    Route::post('/profile/{id}', [UserController::class, 'updateProfile'])
+        ->name('profile.update');
+
+    Route::get('/change-password', [UserController::class, 'changePasswordView'])
+        ->name('change-password.index');
+    Route::post('/change-password/{id}', [UserController::class, 'changePassword'])
+        ->name('change-password.update');
 });
 
 Route::get('/resident', [ResidentController::class, 'index'])->middleware('role:Admin');

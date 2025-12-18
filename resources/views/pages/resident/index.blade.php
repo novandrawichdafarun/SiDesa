@@ -65,6 +65,14 @@
                                             data-bs-toggle="modal"
                                             data-bs-target="#confirmationDelete-{{ $item->id }}"><i
                                                 class="fas fa-trash"></i></button>
+                                        @if (!is_null($item->user_id))
+                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                                data-target="#detailAccount{{ $item->id }}">
+                                                <i class="fas fa-user"></i>
+                                            </button>
+
+                                            @include('pages.resident.detail-account')
+                                        @endif
                                     </td>
                                 </tr>
                                 @include('pages.resident.confirmation-delete')

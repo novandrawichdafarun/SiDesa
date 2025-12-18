@@ -10,6 +10,16 @@
             </div>
             <div class="modal-body">
                 Apakah Anda yakin ingin <b>menyetujui</b> akun atas nama {{ $item->name }}?
+                <div class="form-group mt-3">
+                    <label for="resident_id">Pautkan dengan Data Penduduk (Opsional)</label>
+                    <select name="resident_id" class="form-control">
+                        <option value="">-- Tidak Ada --</option>
+                        @foreach ($residents as $resident)
+                            <option value="{{ $resident->id }}">{{ $resident->name }} (NIK: {{ $resident->nik }})
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
