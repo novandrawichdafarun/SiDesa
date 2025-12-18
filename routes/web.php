@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ResidentController;
+use App\Http\Controllers\UserController;
 
 //? Auth
 Route::get('/', [AuthController::class, 'login']);
@@ -14,6 +15,25 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::get('/dashboard', function () {
     return view('pages.dashboard');
 })->middleware('role:Admin,User');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/account-request', [UserController::class, 'accountRequestView'])->name('account-request.index');
+    Route::post('/account-request/approval/{id}', [UserController::class, 'accountApproval'])->name('account-request.approval');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/account-list', [UserController::class, 'accountListView'])
+        ->name('account-list.index')
+        ->middleware('role:Admin');
+
+    Route::get('/account-request', [UserController::class, 'accountRequestView'])
+        ->name('account-request.index')
+        ->middleware('role:Admin');
+
+    Route::post('/account-list/approval/{id}', [UserController::class, 'accountApproval'])
+        ->name('account-list.approval')
+        ->middleware('role:Admin');
+});
 
 Route::get('/resident', [ResidentController::class, 'index'])->middleware('role:Admin');
 Route::get('/resident/create', [ResidentController::class, 'create'])->middleware('role:Admin');
