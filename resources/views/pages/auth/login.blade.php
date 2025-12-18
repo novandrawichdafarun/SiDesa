@@ -56,12 +56,14 @@
                                         @method('POST')
                                         <div class="form-group">
                                             <input type="email" name="email" class="form-control form-control-user"
-                                                id="inputEmail" aria-describedby="emailHelp"
+                                                @error('email') is-invalid @enderror id="inputEmail"
+                                                aria-describedby="emailHelp" value="{{ old('email') }}"
                                                 placeholder="Masukkan Alamat Email Anda...">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" name="password"
                                                 class="form-control form-control-user" id="inputPassword"
+                                                @error('password') is-invalid @enderror value="{{ old('password') }}"
                                                 placeholder="Password">
                                         </div>
                                         <button type="submit" class="btn btn-primary btn-user btn-block">

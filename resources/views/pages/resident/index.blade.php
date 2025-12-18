@@ -61,20 +61,21 @@
                                         <a href="/resident/{{ $item->id }}"
                                             class="d-inline-block mr-2 btn btn-warning btn-circle btn-sm"><i
                                                 class="fas fa-edit"></i></a>
-                                        <button type="button" class="btn btn-danger btn-circle btn-sm"
+                                        <button type="button" class="btn btn-danger mr-2 btn-circle btn-sm"
                                             data-bs-toggle="modal"
                                             data-bs-target="#confirmationDelete-{{ $item->id }}"><i
                                                 class="fas fa-trash"></i></button>
                                         @if (!is_null($item->user_id))
-                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                data-target="#detailAccount{{ $item->id }}">
+                                            <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
+                                                data-bs-target="#detailAccount-{{ $item->id }}">
                                                 <i class="fas fa-user"></i>
                                             </button>
-
-                                            @include('pages.resident.detail-account')
                                         @endif
                                     </td>
                                 </tr>
+                                @if (!is_null($item->user_id))
+                                    @include('pages.resident.detail-account')
+                                @endif
                                 @include('pages.resident.confirmation-delete')
                             @empty
                                 <tr>
