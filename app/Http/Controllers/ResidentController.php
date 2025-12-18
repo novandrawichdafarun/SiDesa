@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Resident;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class ResidentController extends Controller
 {
@@ -23,17 +24,21 @@ class ResidentController extends Controller
 
     public function store(Request $request)
     {
+        if (Auth::user()->role_id !== 1) {
+            abort(403, 'Aksi tidak diizinkan.');
+        }
+
         $data = $request->validate([
-            'nik' => ['required', 'min:16', 'max:16'],
-            'name' => ['required', 'max:100'],
+            'nik' => ['required', 'min:16', 'max:16', 'unique:residents,nik'],
+            'name' => ['required', 'string', 'max:100'],
             'gender' => ['required', Rule::in(['male', 'female'])],
             'birth_date' => ['required', 'date'],
-            'birth_place' => ['required', 'max:100'],
-            'address' => ['required', 'max:700'],
-            'religion' => ['nullable', 'max:50'],
+            'birth_place' => ['required', 'string', 'max:100'],
+            'address' => ['required', 'string', 'max:700'],
+            'religion' => ['nullable', 'string', 'max:50'],
             'marital_status' => ['required', Rule::in(['single', 'married', 'divorced', 'widowed'])],
-            'occupation' => ['nullable', 'max:100'],
-            'phone' => ['nullable', 'max:15'],
+            'occupation' => ['nullable', 'string', 'max:100'],
+            'phone' => ['nullable', 'string', 'max:15'],
             'status' => ['required', Rule::in(['active', 'moved', 'deceased'])],
         ]);
 
@@ -53,17 +58,21 @@ class ResidentController extends Controller
 
     public function update(Request $request, $id)
     {
+        if (Auth::user()->role_id !== 1) {
+            abort(403, 'Aksi tidak diizinkan.');
+        }
+
         $data = $request->validate([
-            'nik' => ['required', 'min:16', 'max:16'],
-            'name' => ['required', 'max:100'],
+            'nik' => ['required', 'min:16', 'max:16', 'unique:residents,nik'],
+            'name' => ['required', 'string', 'max:100'],
             'gender' => ['required', Rule::in(['male', 'female'])],
             'birth_date' => ['required', 'date'],
-            'birth_place' => ['required', 'max:100'],
-            'address' => ['required', 'max:700'],
-            'religion' => ['nullable', 'max:50'],
+            'birth_place' => ['required', 'string', 'max:100'],
+            'address' => ['required', 'string', 'max:700'],
+            'religion' => ['nullable', 'string', 'max:50'],
             'marital_status' => ['required', Rule::in(['single', 'married', 'divorced', 'widowed'])],
-            'occupation' => ['nullable', 'max:100'],
-            'phone' => ['nullable', 'max:15'],
+            'occupation' => ['nullable', 'string', 'max:100'],
+            'phone' => ['nullable', 'string', 'max:15'],
             'status' => ['required', Rule::in(['active', 'moved', 'deceased'])],
         ]);
 

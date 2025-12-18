@@ -47,34 +47,12 @@
 
     <!-- Nav Item - Dashboard -->
     @foreach ($menus[auth()->user()->role_id] as $menu)
-        <li class="nav-item my-2 {{ request()->is($menu->path . '*') ? 'active' : '' }}">
+        <li class="nav-item my-0.5 {{ request()->is($menu->path . '*') ? 'active' : '' }}">
             <a class="nav-link" href="/{{ $menu->path }}">
                 <i class="{{ $menu->icon }}"></i>
                 <span>{{ $menu->title }}</span></a>
         </li>
     @endforeach
-
-    {{-- <li class="nav-item my-1 {{ request()->is('dashboard') ? 'active' : '' }}">
-        <a class="nav-link" href="/dashboard">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span></a>
-    </li> --}}
-
-    <!-- Divider -->
-    {{-- <hr class="sidebar-divider"> --}}
-
-    <!-- Heading -->
-    {{-- <div class="sidebar-heading my-2">
-        Manajemen Data
-    </div> --}}
-
-
-    <!-- Nav Item - Tables -->
-    {{-- <li class="nav-item my-2 {{ request()->is('resident') ? 'active' : '' }}">
-        <a class="nav-link" href="/resident">
-            <i class="fas fa-fw fa-table"></i>
-            <span>Penduduk</span></a>
-    </li> --}}
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

@@ -15,7 +15,7 @@
                     <table class="table table-bordered table-striped table-hover table-responsive text-nowrap" id="dataTable"
                         width="100%" cellspacing="0">
                         <thead>
-                            <tr class="text-center">
+                            <tr>
                                 <th>No.</th>
                                 <th>NIK</th>
                                 <th>Nama</th>
@@ -30,7 +30,7 @@
                                 <th>Aksi</th>
                             </tr>
                         </thead>
-                        <tbody class="text-center">
+                        <tbody>
                             @forelse($residents as $item)
                                 <tr>
                                     <td class="align-middle">{{ $loop->iteration }}</td>
@@ -50,12 +50,26 @@
                                     <td class="align-middle">{{ $item->address }}</td>
                                     <td class="align-middle">{{ $item->religion }}</td>
                                     <td class="align-middle">
-                                        {{ $item->marital_status }}
+                                        @if ($item->marital_status == 'single')
+                                            <span class="badge badge-primary">Belum Menikah</span>
+                                        @elseif ($item->marital_status == 'married')
+                                            <span class="badge badge-success">Sudah Menikah</span>
+                                        @elseif ($item->marital_status == 'divorced')
+                                            <span class="badge badge-warning">Cerai</span>
+                                        @else
+                                            <span class="badge badge-danger">Duda/Janda</span>
+                                        @endif
                                     </td>
                                     <td class="align-middle">{{ $item->occupation }}</td>
                                     <td class="align-middle">{{ $item->phone }}</td>
                                     <td class="align-middle">
-                                        {{ $item->status }}
+                                        @if ($item->status == 'active')
+                                            <span class="badge badge-success">Hidup</span>
+                                        @elseif ($item->status == 'moved')
+                                            <span class="badge badge-warning">Pindah</span>
+                                        @else
+                                            <span class="badge badge-danger">Almarhum</span>
+                                        @endif
                                     </td>
                                     <td class="text-center align-middle">
                                         <a href="/resident/{{ $item->id }}"
@@ -106,9 +120,6 @@
     <script>
         $(document).ready(function() {
             $('#dataTable').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Indonesian.json" // Mengubah bahasa ke Indonesia
-                },
                 "columnDefs": [{
                         "orderable": false,
                         "targets": 5
