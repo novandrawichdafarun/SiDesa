@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ResidentController;
 use App\Http\Controllers\UserController;
+use App\http\Controllers\ComplaintController;
 
 //? Auth
 Route::get('/', [AuthController::class, 'login']);
@@ -56,12 +57,30 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/resident/{id}', [ResidentController::class, 'edit'])
         ->middleware('role:Admin');
 
-    Route::delete('/resident/{id}', [ResidentController::class, 'destyroy'])
+    Route::delete('/resident/{id}', [ResidentController::class, 'destroy'])
         ->middleware('role:Admin');
 
     Route::get('/resident', [ResidentController::class, 'index'])
         ->middleware('role:Admin');
-
 });
 
 
+Route::middleware(['auth'])->group(function () {
+    Route::post('/complaint', [ComplaintController::class, 'store'])
+        ->middleware('role:User');
+    Route::get('/complaint/create', [complaintController::class, 'create'])
+        ->middleware('role:User');
+
+    Route::put('/complaint/{id}', [complaintController::class, 'update'])
+        ->middleware('role:User');
+    Route::get('/complaint/{id}', [complaintController::class, 'edit'])
+        ->middleware('role:User');
+
+    Route::delete('/complaint/{id}', [complaintController::class, 'destroy'])
+        ->middleware('role:User');
+
+    Route::get('/complaint', [complaintController::class, 'index'])
+        ->middleware('role:Admin,User');
+    Route::post('/complaint/update-status/{id}', [complaintController::class, 'update_status'])
+        ->middleware('role:Admin');
+});

@@ -21,12 +21,22 @@
                 'path' => 'account-request',
                 'icon' => 'fas fa-fw fa-user-plus',
             ],
+            (object) [
+                'title' => 'Pengaduan',
+                'path' => 'complaint',
+                'icon' => 'fas fa-fw fa-scroll',
+            ],
         ],
         2 => [
             (object) [
                 'title' => 'Dashboard',
                 'path' => 'dashboard',
                 'icon' => 'fas fa-fw fa-tachometer-alt',
+            ],
+            (object) [
+                'title' => 'Pengaduan',
+                'path' => 'complaint',
+                'icon' => 'fas fa-fw fa-scroll',
             ],
         ],
     ];

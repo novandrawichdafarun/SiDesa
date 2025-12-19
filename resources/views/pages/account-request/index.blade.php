@@ -5,15 +5,19 @@
         <h1 class="h3 mb-0 text-gray-800">Permintaan Akun</h1>
     </div>
 
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                title: "Berhasil",
+                Text: "{{ session()->get('success') }}",
+                icon: "success"
+            });
+        </script>
+    @endif
+
     <div class="container-fluid">
         <div class="card shadow mb-4">
             <div class="card-body">
-                @if (session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif
-
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover text-nowrap" id="dataTable" width="100%"
                         cellspacing="0">

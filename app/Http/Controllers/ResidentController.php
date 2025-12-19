@@ -81,7 +81,7 @@ class ResidentController extends Controller
         return redirect('/resident')->with('success', 'Data berhasil diubah');
     }
 
-    public function destyroy($id)
+    public function destroy($id)
     {
         $resident = Resident::findOrFail($id);
         $resident->delete();
