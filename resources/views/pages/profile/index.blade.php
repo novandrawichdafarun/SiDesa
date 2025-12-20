@@ -14,6 +14,13 @@
                 </div>
             @endif
 
+            {{-- Alert Error --}}
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             <form action="{{ route('profile.update', Auth::user()->id) }}" method="POST">
                 @csrf
 

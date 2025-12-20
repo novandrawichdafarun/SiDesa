@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Complaint;
+use App\Models\User;
+use App\Notifications\ComplaintStatusChanged;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -13,9 +15,9 @@ class ComplaintController extends Controller
     public function index()
     {
         $residentId = Auth::user()->resident->id ?? null;
-        $complaints = Complaint::when(Auth::user()->role_id == 2, function ($query) use ($residentId) {
+        $complaints = Complaint::when(Auth::user()->role_id == \App\Models\Role::USER, function ($query) use ($residentId) {
             $query->where('resident_id', $residentId);
-        })->paginate(5);
+        })->get();
         return view('pages.complaint.index', compact('complaints'));
     }
 
@@ -33,8 +35,18 @@ class ComplaintController extends Controller
     {
         $request->validate([
             'title' => ['required', 'string', 'min:3', 'max:255'],
-            'content' => ['required', 'string', 'min:3', 'max:255'],
+            'content' => ['required', 'string', 'min:3', 'max:2000'],
             'photo_proof' => ['nullable', 'image', 'mimes:png,jpg,jpeg,PNG,JPG,JPEG', 'max:2048'],
+        ], [
+            'title.required' => 'Judul pengaduan harus diisi.',
+            'title.min' => 'Judul pengaduan minimal 3 karakter.',
+            'title.max' => 'Judul pengaduan maksimal 255 karakter.',
+            'content.required' => 'Konten pengaduan harus diisi.',
+            'content.min' => 'Konten pengaduan minimal 3 karakter.',
+            'content.max' => 'Konten pengaduan maksimal 2000 karakter.',
+            'photo_proof.image' => 'File yang diupload harus berupa gambar.',
+            'photo_proof.mimes' => 'File yang diupload harus berupa gambar dengan ekstensi .png, .jpg, atau .jpeg.',
+            'photo_proof.max' => 'Ukuran file yang diupload maksimal 2MB.',
         ]);
 
         $resident = Auth::user()->resident;
@@ -73,8 +85,18 @@ class ComplaintController extends Controller
     {
         $request->validate([
             'title' => ['required', 'string', 'min:3', 'max:255'],
-            'content' => ['required', 'string', 'min:3', 'max:255'],
+            'content' => ['required', 'string', 'min:3', 'max:2000'],
             'photo_proof' => ['nullable', 'image', 'mimes:png,jpg,jpeg,PNG,JPG,JPEG', 'max:2048'],
+        ], [
+            'title.required' => 'Judul pengaduan harus diisi.',
+            'title.min' => 'Judul pengaduan minimal 3 karakter.',
+            'title.max' => 'Judul pengaduan maksimal 255 karakter.',
+            'content.required' => 'Konten pengaduan harus diisi.',
+            'content.min' => 'Konten pengaduan minimal 3 karakter.',
+            'content.max' => 'Konten pengaduan maksimal 2000 karakter.',
+            'photo_proof.image' => 'File yang diupload harus berupa gambar.',
+            'photo_proof.mimes' => 'File yang diupload harus berupa gambar dengan ekstensi .png, .jpg, atau .jpeg.',
+            'photo_proof.max' => 'Ukuran file yang diupload maksimal 2MB.',
         ]);
 
         $resident = Auth::user()->resident;
@@ -133,14 +155,22 @@ class ComplaintController extends Controller
         ]);
 
         $resident = Auth::user()->resident;
-        if (!$resident && Auth::user()->role_id != 1) {
+        if (!$resident && Auth::user()->role_id != \App\Models\Role::ADMIN) {
             return redirect('/complaint')->with('error', 'Akun anda belum terhubung ke data penduduk.');
         }
 
         $complaint = Complaint::findOrFail($id);
-        $complaint->status = $request->input('status');
 
+        $oldStatus = $complaint->status_label;
+
+        $complaint->status = $request->input('status');
         $complaint->save();
+
+        $newStatus = $complaint->status_label;
+
+        User::where('id', $complaint->resident->user_id)
+            ->firstOrFail()
+            ->notify(new ComplaintStatusChanged($complaint, $oldStatus, $newStatus));
 
         return redirect('/complaint')->with('success', 'Status pengaduan berhasil diubah');
     }

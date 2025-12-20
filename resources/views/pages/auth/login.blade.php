@@ -51,22 +51,23 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Selamat Datang</h1>
                                     </div>
-                                    <form class="user" action="/login" method="POST">
+                                    <form class="user" action="/login" method="POST"
+                                        onsubmit="const submitBtn = document.getElementById('submitBtn'); submitBtn.disabled = true; submitBtn.innerText = 'Memproses...';">
                                         @csrf
                                         @method('POST')
                                         <div class="form-group">
-                                            <input type="email" name="email" class="form-control form-control-user"
-                                                @error('email') is-invalid @enderror id="inputEmail"
-                                                aria-describedby="emailHelp" value="{{ old('email') }}"
+                                            <input type="email" name="email"
+                                                class="form-control form-control-user @error('email') is-invalid @enderror"
+                                                id="inputEmail" aria-describedby="emailHelp" value="{{ old('email') }}"
                                                 placeholder="Masukkan Alamat Email Anda...">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" name="password"
-                                                class="form-control form-control-user" id="inputPassword"
-                                                @error('password') is-invalid @enderror value="{{ old('password') }}"
-                                                placeholder="Password">
+                                                class="form-control form-control-user @error('password') is-invalid @enderror"
+                                                id="inputPassword" value="{{ old('password') }}" placeholder="Password">
                                         </div>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                                        <button id="submitBtn" type="submit"
+                                            class="btn btn-primary btn-user btn-block">
                                             Masuk
                                         </button>
                                     </form>

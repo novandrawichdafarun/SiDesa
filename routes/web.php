@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ResidentController;
 use App\Http\Controllers\UserController;
 use App\http\Controllers\ComplaintController;
+use Illuminate\Support\Facades\DB;
 
 //? Auth
 Route::get('/', [AuthController::class, 'login']);
@@ -16,6 +17,25 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::get('/dashboard', function () {
     return view('pages.dashboard');
 })->middleware('role:Admin,User');
+
+Route::get('/notification', function () {
+    return view('pages.notifications');
+});
+
+Route::post('/notification/{id}/read', function ($id) {
+    $notification = DB::table('notifications')->where('id', $id);
+    $notification->update([
+        'read_at' => DB::raw('CURRENT_TIMESTAMP'),
+    ]);
+
+    $dataArray = json_decode($notification->firstOrFail()->data, true);
+
+    if (isset($dataArray['complaint_id'])) {
+        return redirect('/complaint');
+    }
+
+    return back();
+})->middleware('role:User');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/account-request', [UserController::class, 'accountRequestView'])

@@ -32,13 +32,16 @@
     {{-- Tabel --}}
     <div class="container-fluid">
         <div class="card shadow mb-4">
-            <div class="card-body d-block">
+            <div class="card-body">
                 <div>
                     <table class="table table-bordered table-striped table-hover table-responsive text-nowrap" id="dataTable"
                         width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>No.</th>
+                                @if (auth()->user()->role_id == 1)
+                                    <th>Nama Penduduk</th>
+                                @endif
                                 <th>Judul</th>
                                 <th>Isi Aduan</th>
                                 <th>Status</th>
@@ -51,6 +54,9 @@
                             @forelse($complaints as $item)
                                 <tr>
                                     <td class="align-middle">{{ $loop->iteration }}</td>
+                                    @if (auth()->user()->role_id == 1)
+                                        <td class="align-middle">{{ $item->resident->name }}</td>
+                                    @endif
                                     <td class="align-middle">
                                         <span class="font-weight-bold text-dark">{{ $item->title }}</span>
                                     </td>
@@ -161,7 +167,7 @@
             $('#dataTable').DataTable({
                 "columnDefs": [{
                         "orderable": false,
-                        "targets": 5
+                        "targets": 1
                     } // Mematikan fitur sort di kolom Aksi
                 ]
             });

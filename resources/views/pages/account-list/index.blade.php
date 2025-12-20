@@ -60,7 +60,7 @@
                                 <td colspan="12" class="text-center">
                                     <img src="{{ asset('template/img/undraw_posting_photo.svg') }}" alt="No Data"
                                         style="height: 100px;" class="mb-3 d-block mx-auto">
-                                    <h6 class="text-gray-500">Data penduduk belum tersedia.</h6>
+                                    <h6 class="text-gray-500">Data akun penduduk belum tersedia.</h6>
                                 </td>
                             </tr>
                         @endforelse
@@ -85,7 +85,7 @@
             $('#dataTable').DataTable({
                 "columnDefs": [{
                         "orderable": false,
-                        "targets": 5
+                        "targets": 1
                     } // Mematikan fitur sort di kolom Aksi
                 ]
             });

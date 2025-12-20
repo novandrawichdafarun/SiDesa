@@ -29,6 +29,7 @@ class AuthController extends Controller
         ], [
             'email.required' => 'Email harus diisi',
             'email.email' => 'Email tidak valid',
+            'email.unique' => 'Email sudah terdaftar',
             'password.required' => 'Password harus diisi',
         ]);
 
@@ -77,6 +78,12 @@ class AuthController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required'],
+        ], [
+            'name.required' => 'Nama Lengkap harus diisi',
+            'email.required' => 'Alamat Email harus diisi',
+            'email.email' => 'Alamat Email tidak valid',
+            'email.unique' => 'Alamat Email sudah terdaftar',
+            'password.required' => 'Password harus diisi',
         ]);
 
         $user = new User();

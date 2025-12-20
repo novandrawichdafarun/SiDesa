@@ -7,6 +7,26 @@
                 class="fas fa-plus fa-sm text-white-50"></i> Tambah Penduduk</a>
     </div>
 
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                title: "Berhasil",
+                Text: "{{ session()->get('success') }}",
+                icon: "success"
+            });
+        </script>
+    @endif
+
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                title: "Terjadi Kesalahan!",
+                Text: "{{ session()->get('error') }}",
+                icon: "error"
+            });
+        </script>
+    @endif
+
     {{-- Tabel --}}
     <div class="container-fluid">
         <div class="card shadow mb-4">
@@ -122,7 +142,7 @@
             $('#dataTable').DataTable({
                 "columnDefs": [{
                         "orderable": false,
-                        "targets": 5
+                        "targets": 1
                     } // Mematikan fitur sort di kolom Aksi
                 ]
             });

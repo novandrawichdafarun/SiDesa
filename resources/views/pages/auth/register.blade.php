@@ -45,25 +45,38 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Daftar Akun</h1>
                                     </div>
-                                    <form class="user" action="/register" method="POST">
+                                    <form class="user" action="/register" method="POST"
+                                        onsubmit="const submitBtn = document.getElementById('submitBtn'); submitBtn.disabled = true; submitBtn.innerText = 'Memproses...';">
                                         @csrf
                                         @method('POST')
                                         <div class="form-group">
-                                            <input type="name" name="name" class="form-control form-control-user"
+                                            <input type="name" name="name"
+                                                class="form-control form-control-user @error('name') is-invalid @enderror"
                                                 id="inputName" aria-describedby="nameHelp"
                                                 placeholder="Masukkan Nama Lengkap Anda...">
+                                            @error('name')
+                                                <span class="invalid-feedback">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                         <div class="form-group">
-                                            <input type="email" name="email" class="form-control form-control-user"
+                                            <input type="email" name="email"
+                                                class="form-control form-control-user @error('email') is-invalid @enderror"
                                                 id="inputEmail" aria-describedby="emailHelp"
                                                 placeholder="Masukkan Alamat Email Anda...">
+                                            @error('email')
+                                                <span class="invalid-feedback">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                         <div class="form-group">
                                             <input type="password" name="password"
-                                                class="form-control form-control-user" id="inputPassword"
-                                                placeholder="Password">
+                                                class="form-control form-control-user @error('password') is-invalid @enderror"
+                                                id="inputPassword" placeholder="Massukkan Password">
+                                            @error('password')
+                                                <span class="invalid-feedback">{{ $message }}</span>
+                                            @enderror
                                         </div>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                                        <button id="submitBtn" type="submit"
+                                            class="btn btn-primary btn-user btn-block">
                                             Daftar
                                         </button>
                                     </form>

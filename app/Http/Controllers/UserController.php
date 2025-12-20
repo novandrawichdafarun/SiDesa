@@ -38,6 +38,12 @@ class UserController extends Controller
         $request->validate([
             'for' => ['required', Rule::in(['approve', 'reject', 'activate', 'deactivate'])],
             'reason' => ['nullable', 'exists:residents,id', 'string', 'max:255'],
+        ], [
+            'for.required' => 'Aksi harus dipilih.',
+            'for.in' => 'Aksi tidak valid.',
+            'reason.exists' => 'ID penduduk tidak valid.',
+            'reason.string' => 'Alasan harus berupa teks.',
+            'reason.max' => 'Alasan maksimal 255 karakter.',
         ]);
 
         $user = User::findOrFail($id);
@@ -84,6 +90,10 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'min:3', 'max:255'],
+        ], [
+            'name.required' => 'Nama harus diisi.',
+            'name.min' => 'Nama minimal 3 karakter.',
+            'name.max' => 'Nama maksimal 255 karakter.',
         ]);
 
         $user = User::findOrFail($id);
@@ -103,6 +113,10 @@ class UserController extends Controller
         $request->validate([
             'old_password' => ['required', 'string'],
             'new_password' => ['required', 'string', 'min:8'],
+        ], [
+            'old_password.required' => 'Password lama harus diisi.',
+            'new_password.required' => 'Password baru harus diisi.',
+            'new_password.min' => 'Password baru minimal 8 karakter.',
         ]);
 
         $user = User::findOrFail($id);
