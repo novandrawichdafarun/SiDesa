@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleSeeder::class,
             UserSeeder::class,
-            ComplaintSeeder::class
+            ComplaintSeeder::class,
+            \Database\Seeders\LetterTypeSeeder::class,
         ]);
     }
 }

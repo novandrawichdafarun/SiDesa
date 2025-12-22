@@ -99,7 +99,6 @@ class ResidentController extends Controller
             'nik.required' => 'NIK harus diisi.',
             'nik.min' => 'NIK minimal 16 karakter.',
             'nik.max' => 'NIK maksimal 16 karakter.',
-            'nik.unique' => 'NIK sudah terdaftar.',
             'name.required' => 'Nama harus diisi.',
             'name.max' => 'Nama maksimal 100 karakter.',
             'gender.required' => 'Jenis kelamin harus dipilih.',

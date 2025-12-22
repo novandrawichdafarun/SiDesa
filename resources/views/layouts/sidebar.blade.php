@@ -26,6 +26,11 @@
                 'path' => 'complaint',
                 'icon' => 'fas fa-fw fa-scroll',
             ],
+            (object) [
+                'title' => 'Permohonan Surat',
+                'path' => 'letters',
+                'icon' => 'fas fa-fw fa-envelope',
+            ],
         ],
         2 => [
             (object) [
@@ -37,6 +42,11 @@
                 'title' => 'Pengaduan',
                 'path' => 'complaint',
                 'icon' => 'fas fa-fw fa-scroll',
+            ],
+            (object) [
+                'title' => 'Permohonan Surat',
+                'path' => 'letters',
+                'icon' => 'fas fa-fw fa-envelope',
             ],
         ],
     ];

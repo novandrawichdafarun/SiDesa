@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Surat Keterangan</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            line-height: 1.5;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 2px solid black;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+        }
+
+        .logo {
+            width: 70px;
+            float: left;
+        }
+
+        .title {
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 14px;
+        }
+
+        .content {
+            margin: 0 40px;
+        }
+
+        .field {
+            margin-bottom: 10px;
+        }
+
+        .label {
+            width: 150px;
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        .ttd {
+            float: right;
+            width: 200px;
+            text-align: center;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="title">Pemerintah Kabupaten [Nama Kab]</div>
+        <div class="title">Kecamatan [Nama Kec]</div>
+        <div class="title">Desa [Nama Desa]</div>
+        <div class="subtitle">Alamat: Jl. Raya Desa No. 1, Kode Pos 12345</div>
+    </div>
+
+    <div class="content">
+        <h3 style="text-align: center; text-decoration: underline;">{{ $data->letterType->name }}</h3>
+        <p style="text-align: center;">Nomor: 470 / {{ $data->id }} / DS / {{ date('Y') }}</p>
+
+        <p>Yang bertanda tangan di bawah ini Kepala Desa [Nama Desa], menerangkan bahwa:</p>
+
+        <div class="field">
+            <span class="label">Nama Lengkap</span>: {{ $data->user->name }}
+        </div>
+        <div class="field">
+            <span class="label">NIK</span>: {{ $resident->nik ?? '-' }}
+        </div>
+        <div class="field">
+            <span class="label">Tempat/Tgl Lahir</span>: {{ $resident->birth_place ?? '-' }},
+            {{ $resident->birth_date ?? '-' }}
+        </div>
+        <div class="field">
+            <span class="label">Alamat</span>: {{ $resident->address ?? '-' }}
+        </div>
+        <div class="field">
+            <span class="label">Keperluan</span>: {{ $data->purpose }}
+        </div>
+
+        <p>Demikian surat keterangan ini dibuat untuk dapat dipergunakan sebagaimana mestinya.</p>
+
+        <div class="ttd">
+            <p>[Nama Desa], {{ date('d F Y') }}</p>
+            <p>Kepala Desa</p>
+            <br><br><br>
+            <p><strong>( BAPAK LURAH )</strong></p>
+        </div>
+    </div>
+</body>
+
+</html>

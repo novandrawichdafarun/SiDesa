@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ResidentController;
 use App\Http\Controllers\UserController;
 use App\http\Controllers\ComplaintController;
+use App\Http\Controllers\LetterRequestController;
 use Illuminate\Support\Facades\DB;
 
 //? Auth
@@ -103,4 +104,29 @@ Route::middleware(['auth'])->group(function () {
         ->middleware('role:Admin,User');
     Route::post('/complaint/update-status/{id}', [complaintController::class, 'update_status'])
         ->middleware('role:Admin');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/letters', [LetterRequestController::class, 'store'])
+        ->middleware('role:User');
+
+    Route::get('/letters/create', [LetterRequestController::class, 'create'])
+        ->middleware('role:User');
+
+    Route::put('/letters/{id}', [LetterRequestController::class, 'update'])
+        ->middleware('role:User');
+    Route::get('/letters/{id}', [LetterRequestController::class, 'edit'])
+        ->middleware('role:User');
+
+    Route::delete('/letters/{id}', [LetterRequestController::class, 'destroy'])
+        ->middleware('role:User');
+
+    Route::get('/letters', [LetterRequestController::class, 'index'])
+        ->middleware('role:Admin,User');
+
+    Route::post('/letters/update-status/{id}', [LetterRequestController::class, 'update_status'])
+        ->name('letters-list.approval')
+        ->middleware('role:Admin');
+
+    Route::get('/letters/{id}/print', [LetterRequestController::class, 'print'])->name('letter.print');
 });
