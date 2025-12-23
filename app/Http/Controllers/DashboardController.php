@@ -28,10 +28,10 @@ class DashboardController extends Controller
             'pending_complaints' => Complaint::where('status', 'pending')->count(),
         ];
 
-        $genderData = Resident::selectRaw('gender, count(*) as count')
-            ->groupBy('gender')
-            ->pluck('count', 'gender')
-            ->toArray();
+        $genderData = [
+            'male' => Resident::where('gender', 'male')->count(),
+            'female' => Resident::where('gender', 'female')->count(),
+        ];
 
         $recentLetters = LetterRequest::with('user')
             ->latest()

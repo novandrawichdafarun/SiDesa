@@ -63,7 +63,9 @@
     </a>
 
     <!-- Divider -->
-    <hr class="sidebar-divider my-0">
+    <li>
+        <hr class="sidebar-divider my-0">
+    </li>
 
     <!-- Nav Item - Dashboard -->
     @foreach ($menus[auth()->user()->role_id] as $menu)
@@ -75,7 +77,9 @@
     @endforeach
 
     <!-- Divider -->
-    <hr class="sidebar-divider d-none d-md-block">
+    <li>
+        <hr class="sidebar-divider d-none d-md-block">
+    </li>
 
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">

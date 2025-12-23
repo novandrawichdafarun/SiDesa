@@ -25,8 +25,9 @@
                 <h6 class="m-0 font-weight-bold text-primary">Daftar Permohonan Surat</h6>
             </div>
             <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <div>
+                    <table class="table table-bordered table-responsive table-striped table-hover text-nowrap"
+                        id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>No</th>

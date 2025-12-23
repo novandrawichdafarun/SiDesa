@@ -232,6 +232,11 @@
     </div>
 @endsection
 
+@push('scripts')
+    <script src="{{ asset('template/js/demo/chart-area-demo.js') }}"></script>
+    <script src="{{ asset('template/js/demo/chart-pie-demo.js') }}"></script>
+@endpush
+
 {{-- Script Khusus unutk Admin Chart --}}
 @if (auth()->user()->role_id == 1)
     @push('scripts')
@@ -243,9 +248,9 @@
             Chart.defaults.global.defaultFontColor = '#858796';
 
             // Data dari Controller
-            var genderData = @json($genderData); // Output: {"L": 10, "P": 5}
-            var maleCount = genderData['L'] || 0;
-            var femaleCount = genderData['P'] || 0;
+            var genderData = @json($genderData); // Output: {"male": 10, "female": 5}
+            var maleCount = genderData['male'] || 0;
+            var femaleCount = genderData['female'] || 0;
 
             // Pie Chart Example
             var ctx = document.getElementById("myPieChart");
