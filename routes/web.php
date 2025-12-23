@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ResidentController;
 use App\Http\Controllers\UserController;
 use App\http\Controllers\ComplaintController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LetterRequestController;
 use Illuminate\Support\Facades\DB;
 
@@ -15,9 +16,9 @@ Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('/register', [AuthController::class, 'registerView']);
 Route::post('/register', [AuthController::class, 'register']);
 
-Route::get('/dashboard', function () {
-    return view('pages.dashboard');
-})->middleware('role:Admin,User');
+// Route::get('/dashboard', function () {
+//     return view('pages.dashboard');
+// })->middleware('role:Admin,User');
 
 Route::get('/notification', function () {
     return view('pages.notifications');
@@ -37,6 +38,10 @@ Route::post('/notification/{id}/read', function ($id) {
 
     return back();
 })->middleware('role:User');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+});
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/account-request', [UserController::class, 'accountRequestView'])

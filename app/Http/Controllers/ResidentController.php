@@ -29,7 +29,7 @@ class ResidentController extends Controller
         }
 
         $data = $request->validate([
-            'nik' => ['required', 'min:16', 'max:16', 'unique:residents,nik'],
+            'nik' => ['required', 'digits:16', 'unique:residents,nik', 'regex:/^35/'],
             'name' => ['required', 'string', 'max:100'],
             'gender' => ['required', Rule::in(['male', 'female'])],
             'birth_date' => ['required', 'date'],
@@ -42,9 +42,9 @@ class ResidentController extends Controller
             'status' => ['required', Rule::in(['active', 'moved', 'deceased'])],
         ], [
             'nik.required' => 'NIK harus diisi.',
-            'nik.min' => 'NIK minimal 16 karakter.',
-            'nik.max' => 'NIK maksimal 16 karakter.',
+            'nik.digits' => 'NIK harus terdiri dari 16 karakter.',
             'nik.unique' => 'NIK sudah terdaftar.',
+            'nik.regex' => 'NIK harus diawali dengan kode wilayah yang sesuai (35..).',
             'name.required' => 'Nama harus diisi.',
             'name.max' => 'Nama maksimal 100 karakter.',
             'gender.required' => 'Jenis kelamin harus dipilih.',
@@ -84,7 +84,7 @@ class ResidentController extends Controller
         }
 
         $data = $request->validate([
-            'nik' => ['required', 'min:16', 'max:16', 'unique:residents,nik'],
+            'nik' => ['required', 'digits:16', 'unique:residents,nik', 'regex:/^35/'],
             'name' => ['required', 'string', 'max:100'],
             'gender' => ['required', Rule::in(['male', 'female'])],
             'birth_date' => ['required', 'date'],
@@ -97,8 +97,9 @@ class ResidentController extends Controller
             'status' => ['required', Rule::in(['active', 'moved', 'deceased'])],
         ], [
             'nik.required' => 'NIK harus diisi.',
-            'nik.min' => 'NIK minimal 16 karakter.',
-            'nik.max' => 'NIK maksimal 16 karakter.',
+            'nik.digits' => 'NIK harus terdiri dari 16 karakter.',
+            'nik.unique' => 'NIK sudah terdaftar.',
+            'nik.regex' => 'NIK harus diawali dengan kode wilayah yang sesuai (35..).',
             'name.required' => 'Nama harus diisi.',
             'name.max' => 'Nama maksimal 100 karakter.',
             'gender.required' => 'Jenis kelamin harus dipilih.',
