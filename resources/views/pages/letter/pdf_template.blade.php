@@ -64,7 +64,8 @@
 
     <div class="content">
         <h3 style="text-align: center; text-decoration: underline;">{{ $data->letterType->name }}</h3>
-        <p style="text-align: center;">Nomor: 470 / {{ $data->id }} / DS / {{ date('Y') }}</p>
+        <p style="text-align: center;">Nomor: 470 / {{ $data->id }} / DS / {{ date('M') }} / {{ date('Y') }}
+        </p>
 
         <p>Yang bertanda tangan di bawah ini Kepala Desa [Nama Desa], menerangkan bahwa:</p>
 
@@ -85,7 +86,8 @@
             <span class="label">Keperluan</span>: {{ $data->purpose }}
         </div>
 
-        <p>Demikian surat keterangan ini dibuat untuk dapat dipergunakan sebagaimana mestinya.</p>
+        <p>Demikian surat keterangan ini dibuat dengan sebenarnya dan diberikan kepada yang bersangkutan untuk dapat
+            dipergunakan sebagaimana mestinya.</p>
 
         <div class="ttd">
             <p>[Nama Desa], {{ date('d F Y') }}</p>
