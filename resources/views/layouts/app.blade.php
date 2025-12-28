@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SiDesa - Dashboard</title>
+    <title>SiDesa - @yield('title')</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('template/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -21,6 +21,7 @@
     <link href="{{ asset('template/css/sb-admin-2.css') }}" rel="stylesheet">
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
     @stack('styles')
 
 </head>
@@ -31,7 +32,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        @include('layouts.sidebar')
+        <x-sidebar />
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -41,7 +42,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                @include('layouts.navbar')
+                <x-navbar />
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -54,7 +55,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            @include('layouts.footer')
+            <x-footer />
             <!-- End of Footer -->
 
         </div>

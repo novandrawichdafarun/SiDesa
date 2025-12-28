@@ -11,6 +11,12 @@
         "Noto Color Emoji";
 }
 
-.warp-text {
+/* Override warna primary template */
+.bg-primary {
+    background-color: #1a202c !important; /* Warna dark mode custom */
+}
 
+.sidebar-brand-text {
+    font-weight: 800;
+    letter-spacing: 2px;
 }
