@@ -7,9 +7,61 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Resident;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    public function destroy(User $user)
+    {
+        if ($user->role->name == 'Admin') {
+            return back()->with('error', 'Tidak dapat menghapus akun admin.');
+        }
+
+        $user->delete();
+        return back()->with('success', 'Berhasil menghapus akun ' . $user->name);
+    }
+
+    public function edit($id)
+    {
+        $user = User::findOrFail($id);
+
+        return view('pages.account-list.edit', [
+            'user' => $user
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        if (Auth::user()->role_id !== 1) {
+            abort(403, 'Aksi tidak diizinkan.');
+        }
+
+        $user = User::findOrFail($id);
+
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($id)],
+            'password' => ['nullable', 'min:8'],
+        ], [
+            'name.required' => 'Nama Lengkap harus diisi',
+            'email.required' => 'Alamat Email harus diisi',
+            'email.email' => 'Alamat Email tidak valid',
+            'email.unique' => 'Alamat Email sudah terdaftar',
+            'password.required' => 'Password harus diisi',
+        ]);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return redirect('/account-list')->with('success', 'Berhasil mengubah akun ' . $user->name);
+    }
+
     public function accountRequestView()
     {
         $user = User::where('status', 'submitted')->get();

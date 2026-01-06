@@ -7,6 +7,7 @@ use App\Models\LetterRequest;
 use App\Models\Resident;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -38,7 +39,15 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
 
-        return view('pages.dashboard', compact('stats', 'genderData', 'recentLetters'));
+        $residentJob = Resident::select('occupation', DB::raw('COUNT(*) as count'))
+            ->whereNotNull('occupation')
+            ->groupBy('occupation')
+            ->get();
+
+        $jobLabels = $residentJob->pluck('occupation');
+        $jobData = $residentJob->pluck('count');
+
+        return view('pages.dashboard', compact('stats', 'genderData', 'recentLetters', 'jobLabels', 'jobData'));
     }
 
     public function residentDashboard($user)

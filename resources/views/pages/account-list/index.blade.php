@@ -17,6 +17,7 @@
                             <th>Nama</th>
                             <th>Email</th>
                             <th>Status</th> {{-- Tambah Lajur Status --}}
+                            <th>Aktivasi</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -49,12 +50,22 @@
                                             </button>
                                         @endif
                                     </div>
-
                                     {{-- Include Modals --}}
                                     @include('pages.account-list.confirmation-approve')
                                     @include('pages.account-list.confirmation-reject')
                                 </td>
+                                <td class="text-center align-middle">
+                                    <a href="/account-list/{{ $item->id }}"
+                                        class="d-inline-block mr-2 btn btn-warning btn-circle btn-sm">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <button type="button" class="btn btn-danger mr-2 btn-circle btn-sm"
+                                        data-bs-toggle="modal" data-bs-target="#confirmationDelete-{{ $item->id }}">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
                             </tr>
+                            @include('pages.account-list.confirmation-delete')
                         @empty
                             <tr>
                                 <td colspan="12" class="text-center">
