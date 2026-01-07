@@ -21,6 +21,13 @@
                 'path' => 'account-request',
                 'icon' => 'fas fa-fw fa-user-plus',
             ],
+        ],
+        2 => [
+            (object) [
+                'title' => 'Dashboard',
+                'path' => 'dashboard',
+                'icon' => 'fas fa-fw fa-tachometer-alt',
+            ],
             (object) [
                 'title' => 'Pengaduan',
                 'path' => 'complaint',
@@ -32,7 +39,7 @@
                 'icon' => 'fas fa-fw fa-envelope',
             ],
         ],
-        2 => [
+        3 => [
             (object) [
                 'title' => 'Dashboard',
                 'path' => 'dashboard',

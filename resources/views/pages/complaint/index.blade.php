@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">{{ auth()->user()->role_id == 1 ? 'Aduan Warga' : 'Aduan' }}</h1>
+        <h1 class="h3 mb-0 text-gray-800">{{ auth()->user()->role_id == 3 ? 'Aduan Warga' : 'Aduan' }}</h1>
         @if (isset(auth()->user()->resident))
             <a href="/complaint/create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                     class="fas fa-plus fa-sm text-white-50"></i> Buat Aduan</a>
@@ -39,7 +39,7 @@
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                @if (auth()->user()->role_id == 1)
+                                @if (auth()->user()->role_id == 3)
                                     <th>Nama Penduduk</th>
                                 @endif
                                 <th>Judul</th>
@@ -54,7 +54,7 @@
                             @forelse($complaints as $item)
                                 <tr>
                                     <td class="align-middle">{{ $loop->iteration }}</td>
-                                    @if (auth()->user()->role_id == 1)
+                                    @if (auth()->user()->role_id == 3)
                                         <td class="align-middle">{{ $item->resident->name }}</td>
                                     @endif
                                     <td class="align-middle">
@@ -86,7 +86,7 @@
                                         {{ $item->report_date_label }}
                                     </td>
                                     <td class="text-center align-middle">
-                                        @if (auth()->user()->role_id == 2 && isset(auth()->user()->resident) && $item->status == 'new')
+                                        @if (auth()->user()->role_id == 3 && isset(auth()->user()->resident) && $item->status == 'new')
                                             <div class="d-flex align-items-center">
                                                 <a href="/complaint/{{ $item->id }}"
                                                     class="d-inline-block btn btn-warning btn-circle btn-sm"><i
@@ -96,7 +96,7 @@
                                                     data-bs-target="#confirmationDelete-{{ $item->id }}"><i
                                                         class="fas fa-trash"></i></button>
                                             </div>
-                                        @elseif (auth()->user()->role_id == 1)
+                                        @elseif (auth()->user()->role_id == 3)
                                             <div class="">
                                                 <form id="formChangeStatus-{{ $item->id }}"
                                                     action="/complaint/update-status/{{ $item->id }}" method="post">

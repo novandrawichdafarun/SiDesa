@@ -39,6 +39,8 @@ Route::post('/notification/{id}/read', function ($id) {
     return back();
 })->middleware('role:User');
 
+Route::get('verify-letter/{id}/{hash}', [LetterRequestController::class, 'verify'])->name('letter.verify');
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
@@ -106,9 +108,9 @@ Route::middleware(['auth'])->group(function () {
         ->middleware('role:User');
 
     Route::get('/complaint', [complaintController::class, 'index'])
-        ->middleware('role:Admin,User');
+        ->middleware('role:User,Kades');
     Route::post('/complaint/update-status/{id}', [complaintController::class, 'update_status'])
-        ->middleware('role:Admin');
+        ->middleware('role:Kades');
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -127,11 +129,11 @@ Route::middleware(['auth'])->group(function () {
         ->middleware('role:User');
 
     Route::get('/letters', [LetterRequestController::class, 'index'])
-        ->middleware('role:Admin,User');
+        ->middleware('role:User,Kades');
 
     Route::post('/letters/update-status/{id}', [LetterRequestController::class, 'update_status'])
         ->name('letters-list.approval')
-        ->middleware('role:Admin');
+        ->middleware('role:Kades');
 
-    Route::get('/letters/{id}/print', [LetterRequestController::class, 'print'])->name('letter.print');
+    Route::get('/letters/{id}/download', [LetterRequestController::class, 'download'])->name('letter.download');
 });

@@ -32,6 +32,15 @@ class UserSeeder extends Seeder
             'role_id' => 2 // User
         ]);
 
+        User::create([
+            'id' => 3,
+            'name' => 'Kades SiDesa',
+            'email' => 'kades@gmail.com',
+            'password' => 'password',
+            'status' => 'approved',
+            'role_id' => 3 // Kades
+        ]);
+
         Resident::create([
             'user_id' => 2,
             'nik' => '1234567890123456',

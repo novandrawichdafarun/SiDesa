@@ -22,5 +22,10 @@ class RoleSeeder extends Seeder
             'id' => 2,
             'name' => 'User',
         ]);
+
+        Role::create([
+            'id' => 3,
+            'name' => 'Kades',
+        ]);
     }
 }

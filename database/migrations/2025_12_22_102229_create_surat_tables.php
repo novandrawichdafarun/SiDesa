@@ -23,7 +23,7 @@ return new class extends Migration {
             $table->foreignId('letter_type_id')->constrained();
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->text('purpose')->nullable();
-            $table->text('admin_note')->nullable();
+            $table->text('kades_note')->nullable();
             $table->timestamps();
         });
     }

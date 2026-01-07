@@ -32,7 +32,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>Tanggal</th>
-                                @if (Auth::user()->role_id == 1)
+                                @if (Auth::user()->role_id == 3)
                                     <th>Nama Pemohon</th>
                                 @endif
                                 <th>Jenis Surat</th>
@@ -46,7 +46,7 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->created_at->format('d M Y') }}</td>
-                                    @if (Auth::user()->role_id == 1)
+                                    @if (Auth::user()->role_id == 3)
                                         <td>{{ $item->user->name }}</td>
                                     @endif
                                     <td>{{ $item->letterType->name }}</td>
@@ -61,7 +61,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if (Auth::user()->role_id == 1)
+                                        @if (Auth::user()->role_id == 3)
                                             @if ($item->status == 'pending')
                                                 <div class="d-flex gap-2">
                                                     <button type="button" class="btn btn-success btn-sm mr-2"
@@ -79,9 +79,9 @@
                                         @include('pages.letter.confirmation-reject')
                                         @include('pages.letter.detail-reject')
                                         @if ($item->status == 'approved')
-                                            <a href="/letters/{{ $item->id }}/print" class="btn btn-primary btn-sm"
+                                            <a href="/letters/{{ $item->id }}/download" class="btn btn-primary btn-sm"
                                                 target="_blank">
-                                                <i class="fas fa-print"></i> Cetak PDF
+                                                <i class="fas fa-download"></i> Download PDF
                                             </a>
                                         @elseif($item->status == 'pending' && Auth::user()->id == $item->user_id)
                                             <a href="/letters/{{ $item->id }}" class="btn btn-warning btn-sm">
@@ -121,5 +121,27 @@
         $(function() {
             $('[data-toggle="popover"]').popover()
         })
+    </script>
+@endpush
+
+{{-- PUSH SCRIPTS & STYLES AGAR DATATABLES BERFUNGSI --}}
+@push('styles')
+    <link href="{{ asset('template/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+@endpush
+
+@push('scripts')
+    <script src="{{ asset('template/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('template/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#dataTable').DataTable({
+                "columnDefs": [{
+                        "orderable": false,
+                        "targets": 1
+                    } // Mematikan fitur sort di kolom Aksi
+                ]
+            });
+        });
     </script>
 @endpush

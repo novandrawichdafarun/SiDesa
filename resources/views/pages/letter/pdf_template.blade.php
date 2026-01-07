@@ -63,14 +63,14 @@
     </div>
 
     <div class="content">
-        <h3 style="text-align: center; text-decoration: underline;">{{ $data->letterType->name }}</h3>
-        <p style="text-align: center;">Nomor: 470 / {{ $data->id }} / DS / {{ date('M') }} / {{ date('Y') }}
+        <h3 style="text-align: center; text-decoration: underline;">{{ $item->letterType->name }}</h3>
+        <p style="text-align: center;">Nomor: 470 / {{ $item->id }} / DS / {{ date('M') }} / {{ date('Y') }}
         </p>
 
         <p>Yang bertanda tangan di bawah ini Kepala Desa [Nama Desa], menerangkan bahwa:</p>
 
         <div class="field">
-            <span class="label">Nama Lengkap</span>: {{ $data->user->name }}
+            <span class="label">Nama Lengkap</span>: {{ $item->user->name }}
         </div>
         <div class="field">
             <span class="label">NIK</span>: {{ $resident->nik ?? '-' }}
@@ -83,17 +83,25 @@
             <span class="label">Alamat</span>: {{ $resident->address ?? '-' }}
         </div>
         <div class="field">
-            <span class="label">Keperluan</span>: {{ $data->purpose }}
+            <span class="label">Keperluan</span>: {{ $item->purpose }}
         </div>
 
         <p>Demikian surat keterangan ini dibuat dengan sebenarnya dan diberikan kepada yang bersangkutan untuk dapat
             dipergunakan sebagaimana mestinya.</p>
 
-        <div class="ttd">
-            <p>[Nama Desa], {{ date('d F Y') }}</p>
-            <p>Kepala Desa</p>
-            <br><br><br>
-            <p><strong>( BAPAK LURAH )</strong></p>
+        <div class="ttd" style="margin-top: 50px; width: 100%;">
+            <div style="float: right; width: 40%; text-align: center;">
+                <p>[Nama Desa], {{ date('d F Y') }}</p>
+                <p>Mengetahui,<br>Kepala Desa</p>
+
+                <div style="margin: 10px 0;">
+                    {{-- Menggunakan QR Code Base64 yang dikirim dari Controller --}}
+                    <img src="data:image/svg+xml;base64, {{ $qrcode }}" alt="QR Validation">
+                </div>
+
+                <p><strong>BAPAK KEPALA DESA</strong></p>
+                <p style="font-size: 10px; color: gray;">Ditandatangani secara elektronik</p>
+            </div>
         </div>
     </div>
 </body>

@@ -144,6 +144,53 @@
                     </div>
                 </div>
             </div>
+        @elseif (auth()->user()->role_id == 3)
+            {{-- ======================= TAMPILAN KEPALA DESA (KADES) ======================= --}}
+            <div class="row">
+                <div class="col-xl-8 col-lg-7">
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Tren Pengaduan Warga (Tahun Ini)</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-area">
+                                <canvas id="complaintChart"></canvas>
+                            </div>
+                            <small>Grafik ini membantu mendeteksi lonjakan masalah (misal: banjir di bulan hujan).</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-4 col-lg-5">
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Struktur Populasi</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-pie pt-4 pb-2">
+                                <canvas id="demographyChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card shadow mb-4 border-left-success">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-3">
+                                        Rata-rata Kecepatan Layanan</div>
+                                    <div class="h6 mb-3 font-weight-bold text-gray-800">
+                                        {{ isset($servicePerformance) ? $servicePerformance : '-' }} Jam</div>
+                                    <small>Target: < 24 Jam</small>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-stopwatch fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         @else
             {{-- ======================= TAMPILAN WARGA (USER) ======================= --}}
             @if (!$isProfileComplete)
@@ -247,6 +294,7 @@
     </div>
 @endsection
 
+{{-- Script Khusus untuk Admin Chart --}}
 @if (auth()->user()->role_id == 1)
     @push('scripts')
         <script src="{{ asset('template/vendor/chart.js/Chart.min.js') }}"></script>
@@ -371,7 +419,7 @@
     @endpush
 @endif
 
-{{-- Script Khusus unutk Admin Chart --}}
+{{-- Script Khusus untuk Admin Chart --}}
 @if (auth()->user()->role_id == 1)
     @push('scripts')
         <script src="{{ asset('template/vendor/chart.js/Chart.min.js') }}"></script>
@@ -415,6 +463,111 @@
                         display: false
                     },
                     cutoutPercentage: 80,
+                },
+            });
+        </script>
+    @endpush
+@endif
+
+{{-- Script Khusus untuk Kades Chart --}}
+@if (auth()->user()->role_id == 3)
+    @push('scripts')
+        <script>
+            // --- Chart Tren Pengaduan (Line Chart) ---
+            var ctxComplaint = document.getElementById("complaintChart");
+            var complaintChart = new Chart(ctxComplaint, {
+                type: 'line',
+                data: {
+                    labels: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Ags", "Sep", "Okt", "Nov", "Des"],
+                    datasets: [{
+                        label: "Jumlah Pengaduan",
+                        lineTension: 0.3,
+                        backgroundColor: "rgba(78, 115, 223, 0.05)",
+                        borderColor: "rgba(78, 115, 223, 1)",
+                        pointRadius: 3,
+                        pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                        pointBorderColor: "rgba(78, 115, 223, 1)",
+                        pointHoverRadius: 3,
+                        pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                        pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                        pointHitRadius: 10,
+                        pointBorderWidth: 2,
+                        data: @json($complaintData ?? []), // Data dari Controller
+                    }],
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            left: 10,
+                            right: 25,
+                            top: 25,
+                            bottom: 0
+                        }
+                    },
+                    scales: {
+                        xAxes: [{
+                            gridLines: {
+                                display: false,
+                                drawBorder: false
+                            },
+                            ticks: {
+                                maxTicksLimit: 7
+                            }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                maxTicksLimit: 5,
+                                padding: 10,
+                                callback: function(value) {
+                                    return number_format(value);
+                                }
+                            },
+                            gridLines: {
+                                color: "rgb(234, 236, 244)",
+                                zeroLineColor: "rgb(234, 236, 244)",
+                                drawBorder: false,
+                                borderDash: [2],
+                                zeroLineBorderDash: [2]
+                            }
+                        }],
+                    },
+                    legend: {
+                        display: false
+                    },
+                }
+            });
+
+            // --- Chart Demografi (Doughnut Chart) ---
+            var ctxDemo = document.getElementById("demographyChart");
+            var demoChart = new Chart(ctxDemo, {
+                type: 'doughnut',
+                data: {
+                    labels: @json($demographyLabels ?? []),
+                    datasets: [{
+                        data: @json($demographyData ?? []),
+                        backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
+                        hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
+                        hoverBorderColor: "rgba(234, 236, 244, 1)",
+                    }],
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    tooltips: {
+                        backgroundColor: "rgb(255,255,255)",
+                        bodyFontColor: "#858796",
+                        borderColor: '#dddfeb',
+                        borderWidth: 1,
+                        xPadding: 15,
+                        yPadding: 15,
+                        displayColors: false,
+                        caretPadding: 10,
+                    },
+                    legend: {
+                        display: true,
+                        position: 'bottom'
+                    },
+                    cutoutPercentage: 70,
                 },
             });
         </script>

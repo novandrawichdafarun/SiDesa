@@ -1,7 +1,6 @@
 -- 1. DATA USERS (20 Data)
 -- Password untuk semua user adalah: "password"
 INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `email_verified_at`, `password`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES 
-(3, 2, 'Yuni Wibowo', 'user1@example.com', NOW(), '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'approved', NULL, NOW(), NOW()),
 (4, 2, 'Bambang Hidayat', 'user2@example.com', NOW(), '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'approved', NULL, NOW(), NOW()),
 (5, 2, 'Joko Susanto', 'user3@example.com', NOW(), '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'approved', NULL, NOW(), NOW()),
 (6, 2, 'Bambang Wijaya', 'user4@example.com', NOW(), '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'approved', NULL, NOW(), NOW()),
@@ -20,11 +19,11 @@ INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `email_verified_at`, `pas
 (19, 2, 'Sari Hidayat', 'user17@example.com', NOW(), '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'approved', NULL, NOW(), NOW()),
 (20, 2, 'Bambang Wijaya', 'user18@example.com', NOW(), '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'approved', NULL, NOW(), NOW()),
 (21, 2, 'Siti Susanto', 'user19@example.com', NOW(), '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'approved', NULL, NOW(), NOW()),
-(22, 2, 'Wahyu Pertiwi', 'user20@example.com', NOW(), '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'approved', NULL, NOW(), NOW());
+(22, 2, 'Wahyu Pertiwi', 'user20@example.com', NOW(), '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'approved', NULL, NOW(), NOW()),
+(23, 2, 'Yuni Wibowo', 'user1@example.com', NOW(), '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'approved', NULL, NOW(), NOW());
 
 -- 2. DATA RESIDENTS (20 Data - Relasi ke User ID 1-20)
 INSERT INTO `residents` (`id`, `user_id`, `nik`, `name`, `birth_place`, `birth_date`, `gender`, `address`, `religion`, `marital_status`, `occupation`, `phone`, `status`, `created_at`, `updated_at`) VALUES 
-(3, 3, '3501656582799727', 'Yuni Wibowo', 'Bojonegoro', '1974-01-10', 'female', 'Jl. Brawijaya No. 15, Sidoarjo', 'Islam', 'widowed', 'Pedagang', '08123456001', 'active', NOW(), NOW()),
 (4, 4, '3504802765536961', 'Bambang Hidayat', 'Mojokerto', '1986-02-28', 'male', 'Jl. Merdeka No. 60, Tuban', 'Islam', 'divorced', 'Petani', '08123456002', 'active', NOW(), NOW()),
 (5, 5, '3509310881846205', 'Joko Susanto', 'Surabaya', '1985-07-15', 'female', 'Jl. Gajah Mada No. 38, Mojokerto', 'Islam', 'married', 'Belum/Tidak Bekerja', '08123456003', 'active', NOW(), NOW()),
 (6, 6, '3508651140498406', 'Bambang Wijaya', 'Gresik', '1971-09-13', 'male', 'Jl. Gajah Mada No. 9, Lamongan', 'Islam', 'married', 'Petani', '08123456004', 'active', NOW(), NOW()),
@@ -43,7 +42,8 @@ INSERT INTO `residents` (`id`, `user_id`, `nik`, `name`, `birth_place`, `birth_d
 (19, 19, '3509191280370683', 'Sari Hidayat', 'Surabaya', '1998-09-12', 'female', 'Jl. Sudirman No. 2, Mojokerto', 'Islam', 'divorced', 'Pedagang', '08123456017', 'active', NOW(), NOW()),
 (20, 20, '3506452081038793', 'Bambang Wijaya', 'Mojokerto', '1997-11-05', 'female', 'Jl. Hayam Wuruk No. 21, Mojokerto', 'Islam', 'married', 'Petani', '08123456018', 'active', NOW(), NOW()),
 (21, 21, '3503952109081129', 'Siti Susanto', 'Pasuruan', '1984-07-02', 'female', 'Jl. Diponegoro No. 90, Gresik', 'Islam', 'divorced', 'Belum/Tidak Bekerja', '08123456019', 'active', NOW(), NOW()),
-(22, 22, '3507069268138303', 'Wahyu Pertiwi', 'Malang', '1984-11-22', 'male', 'Jl. Brawijaya No. 84, Gresik', 'Islam', 'married', 'PNS', '08123456020', 'active', NOW(), NOW());
+(22, 22, '3507069268138303', 'Wahyu Pertiwi', 'Malang', '1984-11-22', 'male', 'Jl. Brawijaya No. 84, Gresik', 'Islam', 'married', 'PNS', '08123456020', 'active', NOW(), NOW()),
+(23, 23, '3501656582799727', 'Yuni Wibowo', 'Bojonegoro', '1974-01-10', 'female', 'Jl. Brawijaya No. 15, Sidoarjo', 'Islam', 'widowed', 'Pedagang', '08123456001', 'active', NOW(), NOW());
 
 -- 3. DATA COMPLAINTS (20 Data)
 INSERT INTO `complaints` (`resident_id`, `title`, `content`, `status`, `photo_proof`, `report_date`, `created_at`, `updated_at`) VALUES 
@@ -52,7 +52,7 @@ INSERT INTO `complaints` (`resident_id`, `title`, `content`, `status`, `photo_pr
 (16, 'Lampu PJU mati total', 'Mohon tindak lanjut untuk Lampu PJU mati total. Kondisi sudah berlangsung selama 5 hari.', 'new', NULL, NOW(), NOW(), NOW()),
 (4, 'Pelayanan kelurahan lambat', 'Mohon tindak lanjut untuk Pelayanan kelurahan lambat. Kondisi sudah berlangsung selama 2 hari.', 'new', NULL, NOW(), NOW(), NOW()),
 (12, 'Hewan liar masuk pemukiman', 'Mohon tindak lanjut untuk Hewan liar masuk pemukiman. Kondisi sudah berlangsung selama 5 hari.', 'completed', NULL, NOW(), NOW(), NOW()),
-(3, 'Sampah menumpuk di sungai', 'Mohon tindak lanjut untuk Sampah menumpuk di sungai. Kondisi sudah berlangsung selama 9 hari.', 'processing', NULL, NOW(), NOW(), NOW()),
+(23, 'Sampah menumpuk di sungai', 'Mohon tindak lanjut untuk Sampah menumpuk di sungai. Kondisi sudah berlangsung selama 9 hari.', 'processing', NULL, NOW(), NOW(), NOW()),
 (4, 'Pelayanan kelurahan lambat', 'Mohon tindak lanjut untuk Pelayanan kelurahan lambat. Kondisi sudah berlangsung selama 3 hari.', 'new', NULL, NOW(), NOW(), NOW()),
 (5, 'Permohonan fogging nyamuk', 'Mohon tindak lanjut untuk Permohonan fogging nyamuk. Kondisi sudah berlangsung selama 2 hari.', 'processing', NULL, NOW(), NOW(), NOW()),
 (4, 'Selokan mampet menyebabkan banjir', 'Mohon tindak lanjut untuk Selokan mampet menyebabkan banjir. Kondisi sudah berlangsung selama 3 hari.', 'completed', NULL, NOW(), NOW(), NOW()),
@@ -77,8 +77,8 @@ INSERT INTO `letter_types` (`name`, `code`, `created_at`, `updated_at`) VALUES
 ('Surat Keterangan Belum Menikah', 'SKBM', NOW(), NOW());
 
 -- 5. DATA LETTER REQUESTS (20 Data)
-INSERT INTO `letter_requests` (`user_id`, `letter_type_id`, `status`, `purpose`, `admin_note`, `created_at`, `updated_at`) VALUES 
-(3, 4, 'rejected', 'Data kurang lengkap', 'Mohon lengkapi KTP', NOW(), NOW()),
+INSERT INTO `letter_requests` (`user_id`, `letter_type_id`, `status`, `purpose`, `kades_note`, `created_at`, `updated_at`) VALUES 
+(23, 4, 'rejected', 'Data kurang lengkap', 'Mohon lengkapi KTP', NOW(), NOW()),
 (19, 3, 'rejected', 'Data kurang lengkap', 'Foto buram', NOW(), NOW()),
 (11, 1, 'rejected', 'Data kurang lengkap', NULL, NOW(), NOW()),
 (9, 5, 'approved', 'Sudah selesai', 'Ok', NOW(), NOW()),
@@ -88,7 +88,7 @@ INSERT INTO `letter_requests` (`user_id`, `letter_type_id`, `status`, `purpose`,
 (19, 5, 'approved', 'Sudah selesai', 'Ok', NOW(), NOW()),
 (12, 4, 'approved', 'Sudah selesai', 'Ok', NOW(), NOW()),
 (15, 5, 'approved', 'Sudah selesai', 'Ok', NOW(), NOW()),
-(3, 4, 'approved', 'Sudah selesai', 'Ok', NOW(), NOW()),
+(23, 4, 'approved', 'Sudah selesai', 'Ok', NOW(), NOW()),
 (15, 2, 'rejected', 'Data kurang lengkap', 'Perbaiki data', NOW(), NOW()),
 (8, 4, 'pending', 'Mohon segera diproses', NULL, NOW(), NOW()),
 (17, 2, 'approved', 'Sudah selesai', 'Ok', NOW(), NOW()),
