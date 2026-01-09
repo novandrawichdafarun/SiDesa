@@ -34,7 +34,7 @@
                 <div>
                     <table class="table table-bordered table-striped table-hover table-responsive text-nowrap" id="dataTable"
                         width="100%" cellspacing="0">
-                        <thead>
+                        <thead class="text-center align-middle">
                             <tr>
                                 <th>No.</th>
                                 <th>NIK</th>
@@ -58,7 +58,7 @@
                                     <td class="align-middle">
                                         <span class="font-weight-bold text-dark">{{ $item->name }}</span>
                                     </td>
-                                    <td class="align-middle">
+                                    <td class="text-center align-middle">
                                         @if ($item->gender == 'male')
                                             <span class="badge badge-primary">Laki-laki</span>
                                         @else
@@ -69,7 +69,7 @@
                                         {{ date('d-m-Y', strtotime($item->birth_date)) }}</td>
                                     <td class="align-middle">{{ $item->address }}</td>
                                     <td class="align-middle">{{ $item->religion }}</td>
-                                    <td class="align-middle">
+                                    <td class="text-center align-middle">
                                         @if ($item->marital_status == 'single')
                                             <span class="badge badge-primary">Belum Menikah</span>
                                         @elseif ($item->marital_status == 'married')
@@ -82,7 +82,7 @@
                                     </td>
                                     <td class="align-middle">{{ $item->occupation }}</td>
                                     <td class="align-middle">{{ $item->phone }}</td>
-                                    <td class="align-middle">
+                                    <td class="text-center align-middle">
                                         @if ($item->status == 'active')
                                             <span class="badge badge-success">Hidup</span>
                                         @elseif ($item->status == 'moved')
@@ -91,11 +91,11 @@
                                             <span class="badge badge-danger">Almarhum</span>
                                         @endif
                                     </td>
-                                    <td class="text-center align-middle">
+                                    <td class="text-center align-middle text-nowrap">
                                         <a href="/resident/{{ $item->id }}"
-                                            class="d-inline-block mr-2 btn btn-warning btn-circle btn-sm"><i
+                                            class="d-inline-block mr-1 btn btn-warning btn-circle btn-sm"><i
                                                 class="fas fa-edit"></i></a>
-                                        <button type="button" class="btn btn-danger mr-2 btn-circle btn-sm"
+                                        <button type="button" class="btn btn-danger mr-1 btn-circle btn-sm"
                                             data-bs-toggle="modal"
                                             data-bs-target="#confirmationDelete-{{ $item->id }}"><i
                                                 class="fas fa-trash"></i></button>

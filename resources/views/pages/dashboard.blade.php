@@ -1,4 +1,4 @@
-@extends('layouts.app');
+@extends('layouts.app')
 
 @section('content')
     <div class="container-fluid">
@@ -153,7 +153,7 @@
                             <h6 class="m-0 font-weight-bold text-primary">Tren Pengaduan Warga (Tahun Ini)</h6>
                         </div>
                         <div class="card-body">
-                            <div class="chart-area">
+                            <div class="chart-area my-3">
                                 <canvas id="complaintChart"></canvas>
                             </div>
                             <small>Grafik ini membantu mendeteksi lonjakan masalah (misal: banjir di bulan hujan).</small>
@@ -178,9 +178,9 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-success text-uppercase mb-3">
-                                        Rata-rata Kecepatan Layanan</div>
+                                        Rata-rata Kecepatan Layanan Surat</div>
                                     <div class="h6 mb-3 font-weight-bold text-gray-800">
-                                        {{ isset($servicePerformance) ? $servicePerformance : '-' }} Jam</div>
+                                        {{ $servicePerformance ?? '0' }} Jam</div>
                                     <small>Target: < 24 Jam</small>
                                 </div>
                                 <div class="col-auto">

@@ -34,7 +34,7 @@
         <div class="card shadow mb-4">
             <div class="card-body">
                 <div>
-                    <table class="table table-bordered table-striped table-hover table-responsive text-nowrap" id="dataTable"
+                    <table class="table table-bordered table-striped table-hover table-responsive" id="dataTable"
                         width="100%" cellspacing="0">
                         <thead>
                             <tr>
@@ -60,7 +60,7 @@
                                     <td class="align-middle">
                                         <span class="font-weight-bold text-dark">{{ $item->title }}</span>
                                     </td>
-                                    <td class="align-middle">{{ $item->content }}</td>
+                                    <td class="align-middle">{!! wordwrap($item->content, 15, '<br>') !!}</td>
                                     <td class="align-middle">
                                         @if ($item->status_label == 'Baru')
                                             <span class="badge badge-primary">{{ $item->status_label }}</span>

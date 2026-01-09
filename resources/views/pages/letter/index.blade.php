@@ -26,9 +26,9 @@
             </div>
             <div class="card-body">
                 <div>
-                    <table class="table table-bordered table-responsive table-striped table-hover text-nowrap"
-                        id="dataTable" width="100%" cellspacing="0">
-                        <thead>
+                    <table class="table table-bordered table-responsive table-striped table-hover" id="dataTable"
+                        width="100%" cellspacing="0">
+                        <thead class="text-center">
                             <tr>
                                 <th>No</th>
                                 <th>Tanggal</th>
@@ -60,7 +60,7 @@
                                             <span class="badge badge-danger">Ditolak</span>
                                         @endif
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         @if (Auth::user()->role_id == 3)
                                             @if ($item->status == 'pending')
                                                 <div class="d-flex gap-2">

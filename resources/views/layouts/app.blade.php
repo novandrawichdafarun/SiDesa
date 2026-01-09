@@ -11,6 +11,10 @@
 
     <title>SiDesa - @yield('title')</title>
 
+    @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @endif
+
     <!-- Custom fonts for this template-->
     <link href="{{ asset('template/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link
@@ -19,8 +23,6 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('template/css/sb-admin-2.css') }}" rel="stylesheet">
-
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     @stack('styles')
 

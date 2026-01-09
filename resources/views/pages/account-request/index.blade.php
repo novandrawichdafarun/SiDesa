@@ -9,8 +9,7 @@
     <div class="container-fluid">
         <div class="card shadow mb-4">
             <div class="card-body">
-                <table class="table table-bordered table-striped table-hover text-nowrap" id="dataTable" width="100%"
-                    cellspacing="0">
+                <table class="table table-bordered table-striped table-hover" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>No</th>

@@ -18,7 +18,7 @@ class DashboardController extends Controller
         if ($user->role_id === 1) {
             return $this->adminDashboard();
         } else if ($user->role_id === 3) {
-
+            return $this->kadesDashboard();
         }
 
         return $this->residentDashboard($user);

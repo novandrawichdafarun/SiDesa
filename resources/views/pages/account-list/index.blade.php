@@ -9,9 +9,8 @@
     <div class="container-fluid">
         <div class="card shadow mb-4">
             <div class="card-body">
-                <table class="table table-bordered table-striped table-hover text-nowrap" id="dataTable" width="100%"
-                    cellspacing="0">
-                    <thead>
+                <table class="table table-bordered table-striped table-hover" id="dataTable" width="100%" cellspacing="0">
+                    <thead class="text-center text-middle">
                         <tr>
                             <th>No</th>
                             <th>Nama</th>
@@ -21,7 +20,7 @@
                             <th>Aksi</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="text-center align-middle">
                         @forelse ($users as $index => $item)
                             <tr>
                                 <td>{{ $index + 1 }}</td>

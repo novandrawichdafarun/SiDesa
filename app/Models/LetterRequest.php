@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class LetterRequest extends Model
 {
@@ -21,5 +22,22 @@ class LetterRequest extends Model
     public function letterType()
     {
         return $this->belongsTo(LetterType::class);
+    }
+
+    public function viewOwnScope($query)
+    {
+        $user = Auth::user();
+
+        if ($user && $user->role_id === 4 && $user->resident) {
+            $userRt = $user->resident->rt;
+            $userRw = $user->resident->rw;
+
+            return $query->whereHas('resident', function ($q) use ($userRt, $userRw) {
+                $q->where('rt', $userRt)
+                    ->where('rw', $userRw);
+            });
+        }
+
+        return $query;
     }
 }
