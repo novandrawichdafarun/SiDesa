@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Complaint;
 use App\Models\LetterRequest;
+use App\Models\News;
 use App\Models\Resident;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -48,8 +49,9 @@ class DashboardController extends Controller
 
         $jobLabels = $residentJob->pluck('occupation');
         $jobData = $residentJob->pluck('count');
+        $newsFeed = News::latest()->take(3)->get();
 
-        return view('pages.dashboard', compact('stats', 'genderData', 'recentLetters', 'jobLabels', 'jobData'));
+        return view('pages.dashboard.dashboard', compact('stats', 'genderData', 'recentLetters', 'jobLabels', 'jobData', 'newsFeed'));
     }
 
     public function kadesDashboard()
@@ -70,6 +72,7 @@ class DashboardController extends Controller
         }
 
         $stats = [
+            'residents' => Resident::count(),
             'waiting_signature' => LetterRequest::where('status', 'disetujui_admin')->count(),
             'total_finished' => LetterRequest::where('status', 'selesai')->count(),
         ];
@@ -96,9 +99,11 @@ class DashboardController extends Controller
             ->avg(); // Rata-rata jam
 
         $performance = round($performance ?? 0, 1); // Pembulatan
+        $newsFeed = News::latest()->take(3)->get();
 
-        return view('pages.dashboard', [
+        return view('pages.dashboard.dashboard', [
             // ... variable yang sudah ada ...
+            'newsFeed' => $newsFeed,
             'stats' => $stats,
             'recentLetters' => $recentLetters,
             'complaintData' => $complaintData,
@@ -113,6 +118,7 @@ class DashboardController extends Controller
         // Gunakan scope wilayah jika sudah ada di model Resident
         $resident = $user->resident;
         $query = LetterRequest::with(['user', 'letterType'])->where('status', 'pending');
+        $newsFeed = News::latest()->take(3)->get();
 
         // Jika data resident ada, filter berdasarkan RT/RW resident tersebut
         if ($resident) {
@@ -128,18 +134,20 @@ class DashboardController extends Controller
         }
 
         $stats = [
+            'residents' => $resident ? Resident::where('rt', $resident->rt)->where('rw', $resident->rw)->count() : 0,
             'pending_letters' => $resident ? $query->count() : 0,
             'has_resident_data' => $resident ? true : false,
         ];
 
         $recentLetters = $resident ? $query->latest()->take(5)->get() : collect([]);
 
-        return view('pages.dashboard', compact('stats', 'recentLetters'));
+        return view('pages.dashboard.dashboard', compact('stats', 'recentLetters', 'newsFeed'));
     }
 
     public function residentDashboard($user)
     {
         $resident = Resident::where('user_id', $user->id)->first();
+        $newsFeed = News::latest()->take(3)->get();
 
         if ($resident) {
             $myLetters = LetterRequest::latest()
@@ -158,6 +166,6 @@ class DashboardController extends Controller
 
         $isProfileComplete = Resident::where('user_id', $user->id)->exists();
 
-        return view('pages.dashboard', compact('myLetters', 'myComplaints', 'isProfileComplete'));
+        return view('pages.dashboard.dashboard', compact('myLetters', 'myComplaints', 'isProfileComplete', 'newsFeed'));
     }
 }

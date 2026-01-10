@@ -26,6 +26,11 @@
                 'path' => 'account-request',
                 'icon' => 'fas fa-fw fa-user-plus',
             ],
+            (object) [
+                'title' => 'Portal Berita',
+                'path' => 'news',
+                'icon' => 'fas fa-fw fa-newspaper',
+            ],
         ],
         2 => [
             (object) [
@@ -42,6 +47,11 @@
                 'title' => 'Permohonan Surat',
                 'path' => 'letters',
                 'icon' => 'fas fa-fw fa-envelope',
+            ],
+            (object) [
+                'title' => 'Portal Berita',
+                'path' => 'news',
+                'icon' => 'fas fa-fw fa-newspaper',
             ],
         ],
         3 => [
@@ -60,6 +70,11 @@
                 'path' => 'letters',
                 'icon' => 'fas fa-fw fa-envelope',
             ],
+            (object) [
+                'title' => 'Portal Berita',
+                'path' => 'news',
+                'icon' => 'fas fa-fw fa-newspaper',
+            ],
         ],
         4 => [
             (object) [
@@ -71,6 +86,11 @@
                 'title' => 'Permohonan Surat',
                 'path' => 'letters',
                 'icon' => 'fas fa-fw fa-envelope',
+            ],
+            (object) [
+                'title' => 'Portal Berita',
+                'path' => 'news',
+                'icon' => 'fas fa-fw fa-newspaper',
             ],
         ],
     ];

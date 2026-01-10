@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\http\Controllers\ComplaintController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LetterRequestController;
+use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\DB;
 
 //? Auth
@@ -147,4 +148,12 @@ Route::middleware(['auth'])->group(function () {
         ->middleware('role:RT/RW,Admin,Kades');
 
     Route::get('/letters/{id}/download', [LetterRequestController::class, 'download'])->name('letter.download');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/news', [NewsController::class, 'index'])->name('news.index');
+    Route::get('/news/create', [NewsController::class, 'create'])->name('news.create')->middleware('role:Admin,Kades');
+    Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.show');
+    Route::post('/news', [NewsController::class, 'store'])->name('news.store')->middleware('role:Admin,Kades');
+    Route::delete('/news/{news}', [NewsController::class, 'destroy'])->name('news.destroy')->middleware('role:Admin,Kades');
 });
