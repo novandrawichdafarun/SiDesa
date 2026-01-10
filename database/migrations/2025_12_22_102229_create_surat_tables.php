@@ -21,9 +21,9 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('letter_type_id')->constrained();
-            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->enum('status', ['pending', 'disetujui_rt_rw', 'disetujui_admin', 'selesai', 'rejected'])->default('pending');
             $table->text('purpose')->nullable();
-            $table->text('kades_note')->nullable();
+            $table->text('catatan_revisi')->nullable();
             $table->timestamps();
         });
     }

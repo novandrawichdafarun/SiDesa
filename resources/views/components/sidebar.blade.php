@@ -12,6 +12,11 @@
                 'icon' => 'fas fa-fw fa-table',
             ],
             (object) [
+                'title' => 'Permohonan Surat',
+                'path' => 'letters',
+                'icon' => 'fas fa-fw fa-envelope',
+            ],
+            (object) [
                 'title' => 'Daftar Akun',
                 'path' => 'account-list',
                 'icon' => 'fas fa-fw fa-users',
@@ -49,6 +54,18 @@
                 'title' => 'Pengaduan',
                 'path' => 'complaint',
                 'icon' => 'fas fa-fw fa-scroll',
+            ],
+            (object) [
+                'title' => 'Permohonan Surat',
+                'path' => 'letters',
+                'icon' => 'fas fa-fw fa-envelope',
+            ],
+        ],
+        4 => [
+            (object) [
+                'title' => 'Dashboard',
+                'path' => 'dashboard',
+                'icon' => 'fas fa-fw fa-tachometer-alt',
             ],
             (object) [
                 'title' => 'Permohonan Surat',

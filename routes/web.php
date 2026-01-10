@@ -48,8 +48,6 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/account-request', [UserController::class, 'accountRequestView'])
         ->name('account-request.index');
-    Route::post('/account-request/approval/{id}', [UserController::class, 'accountApproval'])
-        ->name('account-request.approval');
 
     Route::get('/account-list', [UserController::class, 'accountListView'])
         ->name('account-list.index')
@@ -61,6 +59,19 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/account-list/approval/{id}', [UserController::class, 'accountApproval'])
         ->name('account-list.approval')
+        ->middleware('role:Admin');
+
+    Route::post('/account-request/approval/{id}', [UserController::class, 'accountApproval'])
+        ->name('account-request.approval');
+
+    Route::get('/account-list/{id}', [UserController::class, 'edit'])
+        ->name('account-list.edit')
+        ->middleware('role:Admin');
+    Route::put('/account-list/{id}', [UserController::class, 'update'])
+        ->name('account-list.update')
+        ->middleware('role:Admin');
+    Route::delete('/account-list/{id}', [UserController::class, 'destroy'])
+        ->name('account-list.destroy')
         ->middleware('role:Admin');
 
     Route::get('/profile', [UserController::class, 'profileView'])
@@ -129,11 +140,11 @@ Route::middleware(['auth'])->group(function () {
         ->middleware('role:User');
 
     Route::get('/letters', [LetterRequestController::class, 'index'])
-        ->middleware('role:User,Kades');
+        ->middleware('role:User,RT/RW,Admin,Kades');
 
-    Route::post('/letters/update-status/{id}', [LetterRequestController::class, 'update_status'])
+    Route::post('/letters/update-status/{letter}', [LetterRequestController::class, 'approve'])
         ->name('letters-list.approval')
-        ->middleware('role:Kades');
+        ->middleware('role:RT/RW,Admin,Kades');
 
     Route::get('/letters/{id}/download', [LetterRequestController::class, 'download'])->name('letter.download');
 });

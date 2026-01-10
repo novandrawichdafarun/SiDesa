@@ -15,20 +15,20 @@ class DashboardController extends Controller
     public function index()
     {
         $user = Auth::user();
-        if ($user->role_id === 1) {
-            return $this->adminDashboard();
-        } else if ($user->role_id === 3) {
-            return $this->kadesDashboard();
-        }
-
-        return $this->residentDashboard($user);
+        return match ((int) $user->role_id) {
+            1 => $this->adminDashboard(),
+            3 => $this->kadesDashboard(),
+            4 => $this->rtDashboard($user), // Tambahkan method untuk RT/RW
+            default => $this->residentDashboard($user),
+        };
     }
 
     public function adminDashboard()
     {
         $stats = [
             'residents' => Resident::count(),
-            'pending_letters' => LetterRequest::where('status', 'pending')->count(),
+            // Admin hanya mengurus surat yang sudah di-acc RT/RW
+            'pending_letters' => LetterRequest::where('status', 'disetujui_rt_rw')->count(),
             'pending_complaints' => Complaint::where('status', 'pending')->count(),
         ];
 
@@ -38,9 +38,8 @@ class DashboardController extends Controller
         ];
 
         $recentLetters = LetterRequest::with('user')
-            ->latest()
-            ->take(5)
-            ->get();
+            ->where('status', 'disetujui_rt_rw')
+            ->latest()->take(5)->get();
 
         $residentJob = Resident::select('occupation', DB::raw('COUNT(*) as count'))
             ->whereNotNull('occupation')
@@ -70,7 +69,15 @@ class DashboardController extends Controller
             $complaintData[] = $complaintStats[$i] ?? 0;
         }
 
-        // 2. Demografi Cepat (Piramida Umur - Simplified)
+        $stats = [
+            'waiting_signature' => LetterRequest::where('status', 'disetujui_admin')->count(),
+            'total_finished' => LetterRequest::where('status', 'selesai')->count(),
+        ];
+
+        $recentLetters = LetterRequest::with('user')
+            ->where('status', 'disetujui_admin')
+            ->latest()->take(5)->get();
+
         // Mengelompokkan penduduk: Anak (0-14), Produktif (15-64), Lansia (>65)
         $residents = Resident::all();
         $demography = [
@@ -92,11 +99,42 @@ class DashboardController extends Controller
 
         return view('pages.dashboard', [
             // ... variable yang sudah ada ...
+            'stats' => $stats,
+            'recentLetters' => $recentLetters,
             'complaintData' => $complaintData,
             'demographyLabels' => ['Anak (0-14)', 'Produktif (15-64)', 'Lansia (65+)'],
             'demographyData' => array_values($demography),
             'servicePerformance' => $performance
         ]);
+    }
+
+    public function rtDashboard($user)
+    {
+        // Gunakan scope wilayah jika sudah ada di model Resident
+        $resident = $user->resident;
+        $query = LetterRequest::with(['user', 'letterType'])->where('status', 'pending');
+
+        // Jika data resident ada, filter berdasarkan RT/RW resident tersebut
+        if ($resident) {
+            $query->whereHas('user.resident', function ($q) use ($resident) {
+                $q->where('rt', $resident->rt)
+                    ->where('rw', $resident->rw);
+            });
+        } else {
+            // Jika akun RT tidak punya data resident, jangan tampilkan surat apa pun 
+            // atau tampilkan semua (tergantung kebijakan desa). 
+            // Di sini kita asumsikan kosong agar aman.
+            $query->whereRaw('1 = 0');
+        }
+
+        $stats = [
+            'pending_letters' => $resident ? $query->count() : 0,
+            'has_resident_data' => $resident ? true : false,
+        ];
+
+        $recentLetters = $resident ? $query->latest()->take(5)->get() : collect([]);
+
+        return view('pages.dashboard', compact('stats', 'recentLetters'));
     }
 
     public function residentDashboard($user)

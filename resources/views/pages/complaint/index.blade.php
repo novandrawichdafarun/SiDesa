@@ -34,12 +34,12 @@
         <div class="card shadow mb-4">
             <div class="card-body">
                 <div>
-                    <table class="table table-bordered table-striped table-hover table-responsive" id="dataTable"
-                        width="100%" cellspacing="0">
+                    <table class="table table-bordered table-striped table-hover " id="dataTable" width="100%"
+                        cellspacing="0">
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                @if (auth()->user()->role_id == 3)
+                                @if (auth()->user()->role_id != 2)
                                     <th>Nama Penduduk</th>
                                 @endif
                                 <th>Judul</th>
@@ -47,20 +47,22 @@
                                 <th>Status</th>
                                 <th>Foto Bukti</th>
                                 <th>Tangal Laporan</th>
-                                <th>Aksi</th>
+                                @if (auth()->user()->role_id != 2)
+                                    <th>Aksi</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($complaints as $item)
                                 <tr>
                                     <td class="align-middle">{{ $loop->iteration }}</td>
-                                    @if (auth()->user()->role_id == 3)
+                                    @if (auth()->user()->role_id != 2)
                                         <td class="align-middle">{{ $item->resident->name }}</td>
                                     @endif
                                     <td class="align-middle">
                                         <span class="font-weight-bold text-dark">{{ $item->title }}</span>
                                     </td>
-                                    <td class="align-middle">{!! wordwrap($item->content, 15, '<br>') !!}</td>
+                                    <td class="align-middle">{!! wordwrap($item->content, 70, '<br>') !!}</td>
                                     <td class="align-middle">
                                         @if ($item->status_label == 'Baru')
                                             <span class="badge badge-primary">{{ $item->status_label }}</span>
@@ -86,7 +88,7 @@
                                         {{ $item->report_date_label }}
                                     </td>
                                     <td class="text-center align-middle">
-                                        @if (auth()->user()->role_id == 3 && isset(auth()->user()->resident) && $item->status == 'new')
+                                        @if (auth()->user()->role_id != 2 && isset(auth()->user()->resident) && $item->status == 'new')
                                             <div class="d-flex align-items-center">
                                                 <a href="/complaint/{{ $item->id }}"
                                                     class="d-inline-block btn btn-warning btn-circle btn-sm"><i
@@ -96,7 +98,7 @@
                                                     data-bs-target="#confirmationDelete-{{ $item->id }}"><i
                                                         class="fas fa-trash"></i></button>
                                             </div>
-                                        @elseif (auth()->user()->role_id == 3)
+                                        @elseif (auth()->user()->role_id != 2)
                                             <div class="">
                                                 <form id="formChangeStatus-{{ $item->id }}"
                                                     action="/complaint/update-status/{{ $item->id }}" method="post">
@@ -107,20 +109,20 @@
                                                             style="min-width: 150px"
                                                             oninput="document.getElementById('formChangeStatus-{{ $item->id }}').submit()">
                                                             @foreach ([
-            (object)
-    [
-                'label' => 'Baru',
-                'value' => 'new',
-            ],
-            (object) [
-                'label' => 'Sedang Diproses',
-                'value' => 'processing',
-            ],
-            (object) [
-                'label' => 'Selesai',
-                'value' => 'completed',
-            ],
-        ] as $status)
+                                                                    (object)
+                                                                    [
+                                                                        'label' => 'Baru',
+                                                                        'value' => 'new',
+                                                                    ],
+                                                                    (object) [
+                                                                        'label' => 'Sedang Diproses',
+                                                                        'value' => 'processing',
+                                                                    ],
+                                                                    (object) [
+                                                                        'label' => 'Selesai',
+                                                                        'value' => 'completed',
+                                                                    ],
+                                                                ] as $status)
                                                                 <option value="{{ $status->value }}"
                                                                     @selected($item->status == $status->value)>{{ $status->label }}
                                                                 </option>
@@ -138,7 +140,7 @@
                                 @include('pages.complaint.confirmation-delete')
                             @empty
                                 <tr>
-                                    <td colspan="7" class="text-center">
+                                    <td colspan="{{ $role_id != 2 ? '8' : '6' }}" class="text-center">
                                         <img src="{{ asset('template/img/undraw_posting_photo.svg') }}" alt="No Data"
                                             style="height: 100px;" class="mb-3 d-block mx-auto">
                                         <h6 class="text-gray-500">Data aduan belum tersedia.</h6>

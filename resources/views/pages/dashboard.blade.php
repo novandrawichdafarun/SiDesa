@@ -89,7 +89,7 @@
                                                 <td>{{ $letter->created_at->format('d M Y') }}</td>
                                                 <td>
                                                     <span
-                                                        class="badge badge-{{ $letter->status == 'pending' ? 'warning' : ($letter->status == 'approved' ? 'success' : 'danger') }}">
+                                                        class="badge badge-{{ $letter->status == 'disetujui_rt_rw' ? 'warning' : ($letter->status == 'disetujui_admin' ? 'success' : 'danger') }}">
                                                         {{ ucfirst($letter->status) }}
                                                     </span>
                                                 </td>
@@ -144,8 +144,70 @@
                     </div>
                 </div>
             </div>
+        @elseif (auth()->user()->role_id == 4)
+            {{-- TAMPILAN UNTUK RT/RW (Role 4) --}}
+            <div class="row">
+                <div class="col-xl-6 col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Surat Perlu Verifikasi RT/RW</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $stats['pending_letters'] }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-lg-12">
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Antrean Pengajuan Surat Terbaru</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Warga</th>
+                                            <th>Jenis Surat</th>
+                                            <th>Status</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($recentLetters as $letter)
+                                            <tr>
+                                                <td>{{ $letter->user->name }}</td>
+                                                <td>{{ $letter->letterType->name }}</td>
+                                                <td>
+                                                    <span
+                                                        class="badge badge-info">{{ str_replace('_', ' ', $letter->status) }}</span>
+                                                </td>
+                                                <td>
+                                                    <a href="/letters" class="btn btn-sm btn-primary">Proses</a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         @elseif (auth()->user()->role_id == 3)
             {{-- ======================= TAMPILAN KEPALA DESA (KADES) ======================= --}}
+            <div class="row">
+                <div class="col-xl-6 col-md-6 mb-4">
+                    <div class="card border-left-success shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Surat Menunggu Tanda Tangan</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $stats['waiting_signature'] }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-xl-8 col-lg-7">
                     <div class="card shadow mb-4">
@@ -186,6 +248,44 @@
                                 <div class="col-auto">
                                     <i class="fas fa-stopwatch fa-2x text-gray-300"></i>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-lg-12">
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Antrean Pengajuan Surat Terbaru</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Warga</th>
+                                            <th>Jenis Surat</th>
+                                            <th>Status</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($recentLetters as $letter)
+                                            <tr>
+                                                <td>{{ $letter->user->name }}</td>
+                                                <td>{{ $letter->letterType->name }}</td>
+                                                <td>
+                                                    <span
+                                                        class="badge badge-info">{{ str_replace('_', ' ', $letter->status) }}</span>
+                                                </td>
+                                                <td>
+                                                    <a href="/letters" class="btn btn-sm btn-primary">Proses</a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

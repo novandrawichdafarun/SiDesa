@@ -50,18 +50,22 @@
                                         <td>{{ $item->user->name }}</td>
                                     @endif
                                     <td>{{ $item->letterType->name }}</td>
-                                    <td>{{ $item->purpose }}</td>
-                                    <td>
+                                    <td>{!! wordwrap($item->purpose, 70, '<br>') !!}</td>
+                                    <td class="text-center align-middle">
                                         @if ($item->status == 'pending')
-                                            <span class="badge badge-warning">Menunggu</span>
-                                        @elseif($item->status == 'approved')
-                                            <span class="badge badge-success">Disetujui</span>
+                                            <span class="badge badge-primary">Menunggu</span>
+                                        @elseif($item->status == 'disetujui_rt_rw')
+                                            <span class="badge badge-success">Disetujui RT/RW</span>
+                                        @elseif ($item->status == 'disetujui_admin')
+                                            <span class="badge badge-warning">Menunggu Tanda Tangan</span>
+                                        @elseif ($item->status == 'selesai')
+                                            <span class="badge badge-success">Selesai</span>
                                         @else
                                             <span class="badge badge-danger">Ditolak</span>
                                         @endif
                                     </td>
-                                    <td class="text-center">
-                                        @if (Auth::user()->role_id == 3)
+                                    <td class="text-center text-nowrap align-middle">
+                                        @if (Auth::user()->role_id == 4)
                                             @if ($item->status == 'pending')
                                                 <div class="d-flex gap-2">
                                                     <button type="button" class="btn btn-success btn-sm mr-2"
@@ -75,10 +79,38 @@
                                                 </div>
                                             @endif
                                         @endif
+                                        @if (Auth::user()->role_id == 1)
+                                            @if ($item->status == 'disetujui_rt_rw')
+                                                <div class="d-flex gap-2">
+                                                    <button type="button" class="btn btn-success btn-sm mr-2"
+                                                        data-toggle="modal" data-target="#modalApprove{{ $item->id }}">
+                                                        Verivikasi
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                        data-target="#modalReject{{ $item->id }}">
+                                                        Tolak
+                                                    </button>
+                                                </div>
+                                            @endif
+                                        @endif
+                                        @if (Auth::user()->role_id == 3)
+                                            @if ($item->status == 'disetujui_admin')
+                                                <div class="d-flex gap-2">
+                                                    <button type="button" class="btn btn-success btn-sm mr-2"
+                                                        data-toggle="modal" data-target="#modalApprove{{ $item->id }}">
+                                                        Tanda Tangan
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                        data-target="#modalReject{{ $item->id }}">
+                                                        Tolak
+                                                    </button>
+                                                </div>
+                                            @endif
+                                        @endif
                                         @include('pages.letter.confirmation-approve')
                                         @include('pages.letter.confirmation-reject')
                                         @include('pages.letter.detail-reject')
-                                        @if ($item->status == 'approved')
+                                        @if ($item->status === 'selesai')
                                             <a href="/letters/{{ $item->id }}/download" class="btn btn-primary btn-sm"
                                                 target="_blank">
                                                 <i class="fas fa-download"></i> Download PDF

@@ -15,7 +15,7 @@ class LetterRequestController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->role_id === 3) {
+        if ($user->role_id !== 2) {
             $requests = LetterRequest::with(['user', 'letterType'])->latest()->get();
         } else {
             $requests = LetterRequest::with('letterType')->where('user_id', $user->id)->latest()->get();
@@ -92,7 +92,7 @@ class LetterRequestController extends Controller
     {
         $item = LetterRequest::with(['user.resident', 'letterType'])->findOrFail($id);
 
-        if ($item->status !== 'approved') {
+        if ($item->status !== 'selesai') {
             return back()->with('error', 'Surat belum disetujui.');
         }
         // Generate konten QR Code (Misal: Link verifikasi ke website desa)
@@ -111,23 +111,29 @@ class LetterRequestController extends Controller
         return $pdf->download('Surat-' . $item->user->resident->nik . '.pdf');
     }
 
-    public function update_status(Request $request, $id)
+    public function approve(Request $request, LetterRequest $letter)
     {
-        if (Auth::user()->role_id !== 3) {
-            return back()->with('error', 'Hanya kades yang dapat mengubah status surat.');
+        $user = Auth::user();
+
+        // Cek apakah data letter benar-benar ditemukan
+        if (!$letter->exists) {
+            return back()->with('error', 'Data surat tidak ditemukan.');
         }
 
-        $request->validate([
-            'status' => 'required|in:approved,rejected',
-            'kades_note' => 'nullable|string'
-        ]);
+        // Cek apakah canApproveBy mengembalikan false
+        if (!$letter->canApproveBy($user->role_id)) {
+            return back()->with('error', 'Akses ditolak. Status saat ini: ' . $letter->status . ' dan Peran Anda ID: ' . $user->role_id);
+        }
 
-        $letter = LetterRequest::findOrFail($id);
-        $letter->update([
-            'status' => $request->status,
-            'kades_note' => $request->kades_note, // Catatan jika ditolak
-            'updated_at' => now()
-        ]);
+        // 2. Tentukan Status Selanjutnya
+        $nextStatus = match ($user->role_id) {
+            4 => 'disetujui_rt_rw',
+            1 => 'disetujui_admin',
+            3 => 'selesai',
+            default => $letter->status
+        };
+
+        $letter->update(['status' => $nextStatus]);
 
         return redirect('/letters')->with('success', 'Status surat berhasil diperbarui menjadi ' . $request->status);
     }
@@ -139,4 +145,5 @@ class LetterRequestController extends Controller
         // Cek hash untuk keamanan sederhana...
         return "Dokumen ini ASLI dan dikeluarkan oleh Desa pada " . $item->updated_at;
     }
+
 }

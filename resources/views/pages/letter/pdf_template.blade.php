@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Surat Keterangan</title>
+    <title>{{ $item->letterType->name }}</title>
     <style>
         body {
             font-family: 'Times New Roman', Times, serif;

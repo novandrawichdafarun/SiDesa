@@ -76,8 +76,7 @@ class UserController extends Controller
 
     public function accountListView()
     {
-        $user = User::where('role_id', 2)
-            ->where('status', '!=', 'submitted')
+        $user = User::where('status', 'approved')
             ->get();
 
         return view('pages.account-list.index', [

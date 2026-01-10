@@ -40,4 +40,14 @@ class LetterRequest extends Model
 
         return $query;
     }
+
+    public function canApproveBy($roleId)
+    {
+        return match ((int) $roleId) {
+            4 => $this->status === 'pending',
+            1 => $this->status === 'disetujui_rt_rw',
+            3 => $this->status === 'disetujui_admin',
+            default => false,
+        };
+    }
 }
