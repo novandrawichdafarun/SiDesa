@@ -12,6 +12,11 @@
                 'icon' => 'fas fa-fw fa-users',
             ],
             (object) [
+                'title' => 'Pengaduan',
+                'path' => 'complaint',
+                'icon' => 'fas fa-fw fa-comments',
+            ],
+            (object) [
                 'title' => 'Permohonan Surat',
                 'path' => 'letters',
                 'icon' => 'fas fa-fw fa-envelope',
@@ -83,6 +88,11 @@
                 'icon' => 'fas fa-fw fa-chart-line',
             ],
             (object) [
+                'title' => 'Pengaduan',
+                'path' => 'complaint',
+                'icon' => 'fas fa-fw fa-comments',
+            ],
+            (object) [
                 'title' => 'Permohonan Surat',
                 'path' => 'letters',
                 'icon' => 'fas fa-fw fa-envelope',
@@ -101,29 +111,13 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard">
         <div class="sidebar-brand-icon mx-3">
-            <i class="fas fa-building text-warning"></i>
+            <img src="{{ asset('img/logo.png') }}" alt="SiDesa Logo" style="width: 50px; height: 50px;">
         </div>
-        <div class="sidebar-brand-text mx-2">
+        <div class="sidebar-brand-text">
             <span class="font-weight-bold">SiDesa</span>
-            <small class="d-block text-white-50 font-weight-normal">Sistem Informasi Desa</small>
+            <small class="d-block text-white-50 font-weight-normal">Sistem Informasi Desa Nyeni</small>
         </div>
     </a>
-
-    <!-- Divider -->
-    <li class="nav-item">
-        <hr class="sidebar-divider my-2">
-    </li>
-
-    <!-- User Info Card -->
-    <li class="nav-item mb-3 px-3">
-        <div class="text-white-50 small">
-            <div class="mb-2">
-                <i class="fas fa-user-circle fa-2x text-white"></i>
-            </div>
-            <h6 class="font-weight-bold text-white mb-1">{{ Auth::user()->name }}</h6>
-            <span class="badge badge-light">{{ auth()->user()->role->name ?? 'User' }}</span>
-        </div>
-    </li>
 
     <!-- Divider -->
     <li class="nav-item">

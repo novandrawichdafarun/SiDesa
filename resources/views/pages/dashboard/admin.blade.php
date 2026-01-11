@@ -7,71 +7,79 @@
 <!-- Stat Cards -->
 <div class="row mb-4">
     <div class="col-xl-3 col-md-6 mb-3">
-        <div class="card border-0 shadow-sm stat-card h-100 bg-gradient-primary">
-            <div class="card-body">
-                <div class="d-flex align-items-center justify-content-between">
-                    <div>
-                        <div class="text-white-50 small font-weight-bold text-uppercase">Total Penduduk</div>
-                        <h3 class="text-white font-weight-bold mt-2">{{ $stats['residents'] ?? 0 }}</h3>
-                        <p class="text-white-50 small mb-0">Orang</p>
-                    </div>
-                    <div class="stat-icon-lg">
-                        <i class="fas fa-users"></i>
+        <a href="/resident">
+            <div class="card border-0 shadow-sm stat-card h-100 bg-gradient-primary">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <div class="text-white-50 small font-weight-bold text-uppercase">Total Penduduk</div>
+                            <h3 class="text-white font-weight-bold mt-2">{{ $stats['residents'] ?? 0 }}</h3>
+                            <p class="text-white-50 small mb-0">Orang</p>
+                        </div>
+                        <div class="stat-icon-lg">
+                            <i class="fas fa-users"></i>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </a>
     </div>
 
     <div class="col-xl-3 col-md-6 mb-3">
-        <div class="card border-0 shadow-sm stat-card h-100 bg-gradient-warning">
-            <div class="card-body">
-                <div class="d-flex align-items-center justify-content-between">
-                    <div>
-                        <div class="text-white-50 small font-weight-bold text-uppercase">Surat (Pending)</div>
-                        <h3 class="text-white font-weight-bold mt-2">{{ $stats['pending_letters'] ?? 0 }}</h3>
-                        <p class="text-white-50 small mb-0">Menunggu</p>
-                    </div>
-                    <div class="stat-icon-lg">
-                        <i class="fas fa-envelope-open-text"></i>
+        <a href="/letters">
+            <div class="card border-0 shadow-sm stat-card h-100 bg-gradient-warning">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <div class="text-white-50 small font-weight-bold text-uppercase">Surat (Pending)</div>
+                            <h3 class="text-white font-weight-bold mt-2">{{ $stats['pending_letters'] ?? 0 }}</h3>
+                            <p class="text-white-50 small mb-0">Menunggu</p>
+                        </div>
+                        <div class="stat-icon-lg">
+                            <i class="fas fa-envelope-open-text"></i>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </a>
     </div>
 
     <div class="col-xl-3 col-md-6 mb-3">
-        <div class="card border-0 shadow-sm stat-card h-100 bg-gradient-info">
-            <div class="card-body">
-                <div class="d-flex align-items-center justify-content-between">
-                    <div>
-                        <div class="text-white-50 small font-weight-bold text-uppercase">Akun Baru</div>
-                        <h3 class="text-white font-weight-bold mt-2">{{ $stats['pending_accounts'] ?? 0 }}</h3>
-                        <p class="text-white-50 small mb-0">Verifikasi</p>
-                    </div>
-                    <div class="stat-icon-lg">
-                        <i class="fas fa-user-clock"></i>
+        <a href="/account-request">
+            <div class="card border-0 shadow-sm stat-card h-100 bg-gradient-info">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <div class="text-white-50 small font-weight-bold text-uppercase">Akun Baru</div>
+                            <h3 class="text-white font-weight-bold mt-2">{{ $stats['pending_accounts'] ?? 0 }}</h3>
+                            <p class="text-white-50 small mb-0">Verifikasi</p>
+                        </div>
+                        <div class="stat-icon-lg">
+                            <i class="fas fa-user-clock"></i>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </a>
     </div>
 
     <div class="col-xl-3 col-md-6 mb-3">
-        <div class="card border-0 shadow-sm stat-card h-100 bg-gradient-danger">
-            <div class="card-body">
-                <div class="d-flex align-items-center justify-content-between">
-                    <div>
-                        <div class="text-white-50 small font-weight-bold text-uppercase">Pengaduan</div>
-                        <h3 class="text-white font-weight-bold mt-2">{{ $stats['pending_complaints'] ?? 0 }}</h3>
-                        <p class="text-white-50 small mb-0">Total</p>
-                    </div>
-                    <div class="stat-icon-lg">
-                        <i class="fas fa-bullhorn"></i>
+        <a href="/complaint">
+            <div class="card border-0 shadow-sm stat-card h-100 bg-gradient-danger">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <div class="text-white-50 small font-weight-bold text-uppercase">Pengaduan</div>
+                            <h3 class="text-white font-weight-bold mt-2">{{ $stats['pending_complaints'] ?? 0 }}</h3>
+                            <p class="text-white-50 small mb-0">Total</p>
+                        </div>
+                        <div class="stat-icon-lg">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </a>
     </div>
 </div>
 

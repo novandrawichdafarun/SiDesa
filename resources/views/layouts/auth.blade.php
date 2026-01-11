@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Sistem Informasi Desa">
     <meta name="author" content="SiDesa">
-    <title>@yield('title') - SiDesa</title>
+    <title>SiDesa - @yield('title')</title>
+    <link rel="icon" type="image/png" href="{{ asset('img/logo.png') }}">
 
     <link href="{{ asset('template/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link
@@ -23,6 +24,11 @@
         /* Custom Styles untuk Halaman Auth */
         body {
             background-color: var(--primary-color);
+            background-image: url('img/background.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
             /* Warna background default soft */
             height: 100vh;
             display: flex;
@@ -37,11 +43,11 @@
         }
 
         .bg-login-image {
-            background-image: url('https://source.unsplash.com/random/600x800/?village,nature');
+            background-image: url('img/thumbnail.png');
         }
 
         .bg-register-image {
-            background-image: url('https://source.unsplash.com/random/600x800/?community,people');
+            background-image: url('img/thumbnail.png');
         }
 
         .card-auth {

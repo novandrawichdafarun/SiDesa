@@ -4,7 +4,7 @@
             <h5 class="alert-heading mb-2">
                 <i class="fas fa-smile-beam text-primary mr-2"></i>Selamat Datang, {{ Auth::user()->name }}!
             </h5>
-            <p class="mb-0 text-muted">Selamat datang di Sistem Informasi Desa (SiDesa). Gunakan platform ini untuk
+            <p class="mb-0 text-muted">Selamat datang di Sistem Informasi Desa (Desa Nyeni). Gunakan platform ini untuk
                 mengurus surat menyurat dan memantau informasi desa dengan mudah.</p>
         </div>
     </div>

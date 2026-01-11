@@ -120,9 +120,9 @@ Route::middleware(['auth'])->group(function () {
         ->middleware('role:User');
 
     Route::get('/complaint', [complaintController::class, 'index'])
-        ->middleware('role:User,Kades');
+        ->middleware('role:User,Kades,Admin,RT/RW');
     Route::post('/complaint/update-status/{id}', [complaintController::class, 'update_status'])
-        ->middleware('role:Kades');
+        ->middleware('role:Kades,Admin,RT/RW');
 });
 
 Route::middleware(['auth'])->group(function () {

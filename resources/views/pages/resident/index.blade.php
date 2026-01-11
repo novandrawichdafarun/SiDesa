@@ -52,6 +52,7 @@
                                 <th class="text-center align-middle font-weight-600 text-gray-800">Jenis Kelamin</th>
                                 <th class="text-center align-middle font-weight-600 text-gray-800">Tempat Tanggal Lahir</th>
                                 <th class="text-center align-middle font-weight-600 text-gray-800">Alamat</th>
+                                <th class="text-center align-middle font-weight-600 text-gray-800">RT/RW</th>
                                 <th class="text-center align-middle font-weight-600 text-gray-800">Agama</th>
                                 <th class="text-center align-middle font-weight-600 text-gray-800">Status Perkawinan</th>
                                 <th class="text-center align-middle font-weight-600 text-gray-800">Pekerjaan</th>
@@ -80,6 +81,7 @@
                                     <td class="align-middle">{{ $item->birth_place }},
                                         {{ date('d-m-Y', strtotime($item->birth_date)) }}</td>
                                     <td class="align-middle">{{ $item->address }}</td>
+                                    <td class="align-middle">RT {{ $item->rt }} / RW {{ $item->rw }}</td>
                                     <td class="align-middle">{{ $item->religion }}</td>
                                     <td class="text-center align-middle">
                                         @if ($item->marital_status == 'single')

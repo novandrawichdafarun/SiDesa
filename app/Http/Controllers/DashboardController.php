@@ -31,7 +31,7 @@ class DashboardController extends Controller
             'residents' => Resident::count(),
             // Admin hanya mengurus surat yang sudah di-acc RT/RW
             'pending_letters' => LetterRequest::where('status', 'disetujui_rt_rw')->count(),
-            'pending_complaints' => Complaint::where('status', 'pending')->count(),
+            'pending_complaints' => Complaint::count(),
             'pending_accounts' => User::where('status', 'submitted')->count(),
         ];
 
