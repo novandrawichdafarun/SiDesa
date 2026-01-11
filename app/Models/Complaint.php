@@ -2,11 +2,20 @@
 
 namespace App\Models;
 
+use Database\Factories\ComplaintFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Complaint extends Model
 {
+    use HasFactory;
+
     protected $guarded = [];
+
+    protected static function newFactory()
+    {
+        return ComplaintFactory::new();
+    }
 
     public function getStatusLabelAttribute()// status_label
     {

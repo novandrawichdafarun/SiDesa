@@ -18,6 +18,8 @@ return new class extends Migration {
             $table->date('birth_date');
             $table->string('birth_place', 100);
             $table->text('address');
+            $table->string('rt', 5)->nullable();
+            $table->string('rw', 5)->nullable();
             $table->string('religion', 50)->nullable();
             $table->enum('marital_status', ['single', 'married', 'divorced', 'widowed']);
             $table->string('occupation', 100)->nullable();

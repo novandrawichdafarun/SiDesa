@@ -2,9 +2,13 @@
 
 @section('content')
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Data Penduduk</h1>
-        <a href="/resident/create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                class="fas fa-plus fa-sm text-white-50"></i> Tambah Penduduk</a>
+        <h1 class="h3 mb-0 text-gray-800">
+            <i class="fas fa-users text-primary mr-2"></i>Data Penduduk
+        </h1>
+        <a href="/resident/create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+            style="background: linear-gradient(135deg, #4e73df 0%, #2e59d9 100%); border: none;">
+            <i class="fas fa-plus fa-sm text-white-50 mr-2"></i>Tambah Penduduk
+        </a>
     </div>
 
     @if (session('success'))
@@ -29,25 +33,31 @@
 
     {{-- Tabel --}}
     <div class="container-fluid">
-        <div class="card shadow mb-4">
-            <div class="card-body">
-                <div>
-                    <table class="table table-bordered table-striped table-hover table-responsive text-nowrap" id="dataTable"
-                        width="100%" cellspacing="0">
-                        <thead class="text-center align-middle">
+        <div class="card shadow-lg mb-4" style="border: none; border-radius: 0.75rem;">
+            <div class="card-header py-3"
+                style="background: linear-gradient(135deg, #4e73df 0%, #2e59d9 100%); border-bottom: none;">
+                <h6 class="m-0 font-weight-bold text-white">
+                    <i class="fas fa-table mr-2"></i>Daftar Penduduk
+                </h6>
+            </div>
+            <div class="card-body" style="padding: 1.5rem;">
+                <div class="table-responsive">
+                    <table class="table table-hover text-nowrap" id="dataTable" width="100%" cellspacing="0"
+                        style="border-collapse: separate; border-spacing: 0;">
+                        <thead style="background-color: #f8f9fa; border-bottom: 2px solid #e3e6f0;">
                             <tr>
-                                <th>No.</th>
-                                <th>NIK</th>
-                                <th>Nama</th>
-                                <th>Jenis Kelamin</th>
-                                <th>Tempat Tanggal Lahir</th>
-                                <th>Alamat</th>
-                                <th>Agama</th>
-                                <th>Status Perkawinan</th>
-                                <th>Pekerjaan</th>
-                                <th>No. Telp</th>
-                                <th>Status Penduduk</th>
-                                <th>Aksi</th>
+                                <th class="text-center align-middle font-weight-600 text-gray-800">No.</th>
+                                <th class="text-center align-middle font-weight-600 text-gray-800">NIK</th>
+                                <th class="text-center align-middle font-weight-600 text-gray-800">Nama</th>
+                                <th class="text-center align-middle font-weight-600 text-gray-800">Jenis Kelamin</th>
+                                <th class="text-center align-middle font-weight-600 text-gray-800">Tempat Tanggal Lahir</th>
+                                <th class="text-center align-middle font-weight-600 text-gray-800">Alamat</th>
+                                <th class="text-center align-middle font-weight-600 text-gray-800">Agama</th>
+                                <th class="text-center align-middle font-weight-600 text-gray-800">Status Perkawinan</th>
+                                <th class="text-center align-middle font-weight-600 text-gray-800">Pekerjaan</th>
+                                <th class="text-center align-middle font-weight-600 text-gray-800">No. Telp</th>
+                                <th class="text-center align-middle font-weight-600 text-gray-800">Status Penduduk</th>
+                                <th class="text-center align-middle font-weight-600 text-gray-800">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -60,9 +70,11 @@
                                     </td>
                                     <td class="text-center align-middle">
                                         @if ($item->gender == 'male')
-                                            <span class="badge badge-primary">Laki-laki</span>
+                                            <span class="badge"
+                                                style="background-color: #4e73df; color: white; padding: 0.5rem 0.75rem; border-radius: 0.25rem;">Laki-laki</span>
                                         @else
-                                            <span class="badge badge-warning">Perempuan</span>
+                                            <span class="badge"
+                                                style="background-color: #f6c23e; color: #333; padding: 0.5rem 0.75rem; border-radius: 0.25rem;">Perempuan</span>
                                         @endif
                                     </td>
                                     <td class="align-middle">{{ $item->birth_place }},
@@ -71,37 +83,53 @@
                                     <td class="align-middle">{{ $item->religion }}</td>
                                     <td class="text-center align-middle">
                                         @if ($item->marital_status == 'single')
-                                            <span class="badge badge-primary">Belum Menikah</span>
+                                            <span class="badge"
+                                                style="background-color: #4e73df; color: white; padding: 0.5rem 0.75rem; border-radius: 0.25rem;">Belum
+                                                Menikah</span>
                                         @elseif ($item->marital_status == 'married')
-                                            <span class="badge badge-success">Sudah Menikah</span>
+                                            <span class="badge"
+                                                style="background-color: #1cc88a; color: white; padding: 0.5rem 0.75rem; border-radius: 0.25rem;">Sudah
+                                                Menikah</span>
                                         @elseif ($item->marital_status == 'divorced')
-                                            <span class="badge badge-warning">Cerai</span>
+                                            <span class="badge"
+                                                style="background-color: #f6c23e; color: #333; padding: 0.5rem 0.75rem; border-radius: 0.25rem;">Cerai</span>
                                         @else
-                                            <span class="badge badge-danger">Duda/Janda</span>
+                                            <span class="badge"
+                                                style="background-color: #e74c3c; color: white; padding: 0.5rem 0.75rem; border-radius: 0.25rem;">Duda/Janda</span>
                                         @endif
                                     </td>
                                     <td class="align-middle">{{ $item->occupation }}</td>
                                     <td class="align-middle">{{ $item->phone }}</td>
                                     <td class="text-center align-middle">
                                         @if ($item->status == 'active')
-                                            <span class="badge badge-success">Hidup</span>
+                                            <span class="badge"
+                                                style="background-color: #1cc88a; color: white; padding: 0.5rem 0.75rem; border-radius: 0.25rem;">Hidup</span>
                                         @elseif ($item->status == 'moved')
-                                            <span class="badge badge-warning">Pindah</span>
+                                            <span class="badge"
+                                                style="background-color: #f6c23e; color: #333; padding: 0.5rem 0.75rem; border-radius: 0.25rem;">Pindah</span>
                                         @else
-                                            <span class="badge badge-danger">Almarhum</span>
+                                            <span class="badge"
+                                                style="background-color: #e74c3c; color: white; padding: 0.5rem 0.75rem; border-radius: 0.25rem;">Almarhum</span>
                                         @endif
                                     </td>
                                     <td class="text-center align-middle text-nowrap">
-                                        <a href="/resident/{{ $item->id }}"
-                                            class="d-inline-block mr-1 btn btn-warning btn-circle btn-sm"><i
+                                        <a href="/resident/{{ $item->id }}" class="d-inline-block mr-2 btn btn-sm"
+                                            style="background-color: #f6c23e; color: #333; border: none; border-radius: 0.25rem; padding: 0.5rem 0.75rem; transition: all 0.3s ease;"
+                                            onmouseover="this.style.backgroundColor='#e0b323'"
+                                            onmouseout="this.style.backgroundColor='#f6c23e'"><i
                                                 class="fas fa-edit"></i></a>
-                                        <button type="button" class="btn btn-danger mr-1 btn-circle btn-sm"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#confirmationDelete-{{ $item->id }}"><i
+                                        <button type="button" class="btn btn-sm mr-2"
+                                            style="background-color: #e74c3c; color: white; border: none; border-radius: 0.25rem; padding: 0.5rem 0.75rem; transition: all 0.3s ease;"
+                                            data-bs-toggle="modal" data-bs-target="#confirmationDelete-{{ $item->id }}"
+                                            onmouseover="this.style.backgroundColor='#c0392b'"
+                                            onmouseout="this.style.backgroundColor='#e74c3c'"><i
                                                 class="fas fa-trash"></i></button>
                                         @if (!is_null($item->user_id))
-                                            <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
-                                                data-bs-target="#detailAccount-{{ $item->id }}">
+                                            <button type="button" class="btn btn-sm"
+                                                style="background-color: #3498db; color: white; border: none; border-radius: 0.25rem; padding: 0.5rem 0.75rem; transition: all 0.3s ease;"
+                                                data-bs-toggle="modal" data-bs-target="#detailAccount-{{ $item->id }}"
+                                                onmouseover="this.style.backgroundColor='#2980b9'"
+                                                onmouseout="this.style.backgroundColor='#3498db'">
                                                 <i class="fas fa-user"></i>
                                             </button>
                                         @endif
@@ -113,10 +141,10 @@
                                 @include('pages.resident.confirmation-delete')
                             @empty
                                 <tr>
-                                    <td colspan="12" class="text-center">
-                                        <img src="{{ asset('template/img/undraw_posting_photo.svg') }}" alt="No Data"
-                                            style="height: 100px;" class="mb-3 d-block mx-auto">
-                                        <h6 class="text-gray-500">Data penduduk belum tersedia.</h6>
+                                    <td colspan="12" class="text-center py-5">
+                                        <i class="fas fa-inbox text-gray-300 mb-3"
+                                            style="font-size: 3rem; display: block;"></i>
+                                        <h6 class="text-gray-500 font-weight-500">Data penduduk belum tersedia.</h6>
                                     </td>
                                 </tr>
                             @endforelse

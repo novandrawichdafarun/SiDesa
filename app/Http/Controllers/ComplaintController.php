@@ -156,7 +156,7 @@ class ComplaintController extends Controller
         ]);
 
         $resident = Auth::user()->resident;
-        if (!$resident && Auth::user()->role_id != \App\Models\Role::ADMIN) {
+        if (!$resident && Auth::user()->role_id != 1) {
             return redirect('/complaint')->with('error', 'Akun anda belum terhubung ke data penduduk.');
         }
 

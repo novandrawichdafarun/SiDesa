@@ -2,10 +2,15 @@
 
 @section('content')
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">{{ auth()->user()->role_id == 3 ? 'Aduan Warga' : 'Aduan' }}</h1>
+        <h1 class="h3 mb-0 text-gray-800">
+            <i
+                class="fas fa-exclamation-circle text-primary mr-2"></i>{{ auth()->user()->role_id == 3 ? 'Aduan Warga' : 'Aduan' }}
+        </h1>
         @if (isset(auth()->user()->resident))
-            <a href="/complaint/create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                    class="fas fa-plus fa-sm text-white-50"></i> Buat Aduan</a>
+            <a href="/complaint/create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                style="background: linear-gradient(135deg, #4e73df 0%, #2e59d9 100%); border: none;">
+                <i class="fas fa-plus fa-sm text-white-50 mr-2"></i>Buat Aduan
+            </a>
         @endif
     </div>
 
@@ -31,24 +36,29 @@
 
     {{-- Tabel --}}
     <div class="container-fluid">
-        <div class="card shadow mb-4">
-            <div class="card-body">
-                <div>
-                    <table class="table table-bordered table-striped table-hover " id="dataTable" width="100%"
-                        cellspacing="0">
-                        <thead>
+        <div class="card shadow-lg mb-4" style="border: none; border-radius: 0.75rem;">
+            <div class="card-header py-3"
+                style="background: linear-gradient(135deg, #4e73df 0%, #2e59d9 100%); border-bottom: none;">
+                <h6 class="m-0 font-weight-bold text-white">
+                    <i class="fas fa-list mr-2"></i>Daftar Aduan
+                </h6>
+            </div>
+            <div class="card-body" style="padding: 1.5rem;">
+                <div class="table-responsive">
+                    <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+                        <thead style="background-color: #f8f9fa; border-bottom: 2px solid #e3e6f0;">
                             <tr>
-                                <th>No.</th>
+                                <th class="text-center align-middle font-weight-600 text-gray-800">No.</th>
                                 @if (auth()->user()->role_id != 2)
-                                    <th>Nama Penduduk</th>
+                                    <th class="text-center align-middle font-weight-600 text-gray-800">Nama Penduduk</th>
                                 @endif
-                                <th>Judul</th>
-                                <th>Isi Aduan</th>
-                                <th>Status</th>
-                                <th>Foto Bukti</th>
-                                <th>Tangal Laporan</th>
+                                <th class="text-center align-middle font-weight-600 text-gray-800">Judul</th>
+                                <th class="text-center align-middle font-weight-600 text-gray-800">Isi Aduan</th>
+                                <th class="text-center align-middle font-weight-600 text-gray-800">Status</th>
+                                <th class="text-center align-middle font-weight-600 text-gray-800">Foto Bukti</th>
+                                <th class="text-center align-middle font-weight-600 text-gray-800">Tanggal Laporan</th>
                                 @if (auth()->user()->role_id != 2)
-                                    <th>Aksi</th>
+                                    <th class="text-center align-middle font-weight-600 text-gray-800">Aksi</th>
                                 @endif
                             </tr>
                         </thead>
@@ -63,13 +73,16 @@
                                         <span class="font-weight-bold text-dark">{{ $item->title }}</span>
                                     </td>
                                     <td class="align-middle">{!! wordwrap($item->content, 70, '<br>') !!}</td>
-                                    <td class="align-middle">
+                                    <td class="text-center align-middle">
                                         @if ($item->status_label == 'Baru')
-                                            <span class="badge badge-primary">{{ $item->status_label }}</span>
+                                            <span class="badge"
+                                                style="background-color: #4e73df; color: white; padding: 0.5rem 0.75rem; border-radius: 0.25rem;">{{ $item->status_label }}</span>
                                         @elseif ($item->status_label == 'Sedang Diproses')
-                                            <span class="badge badge-warning">{{ $item->status_label }}</span>
+                                            <span class="badge"
+                                                style="background-color: #f6c23e; color: #333; padding: 0.5rem 0.75rem; border-radius: 0.25rem;">{{ $item->status_label }}</span>
                                         @else
-                                            <span class="badge badge-success">{{ $item->status_label }}</span>
+                                            <span class="badge"
+                                                style="background-color: #1cc88a; color: white; padding: 0.5rem 0.75rem; border-radius: 0.25rem;">{{ $item->status_label }}</span>
                                         @endif
                                     </td>
                                     <td class="align-middle text-center">
@@ -89,13 +102,18 @@
                                     </td>
                                     <td class="text-center align-middle">
                                         @if (auth()->user()->role_id != 2 && isset(auth()->user()->resident) && $item->status == 'new')
-                                            <div class="d-flex align-items-center">
-                                                <a href="/complaint/{{ $item->id }}"
-                                                    class="d-inline-block btn btn-warning btn-circle btn-sm"><i
+                                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                                <a href="/complaint/{{ $item->id }}" class="btn btn-sm"
+                                                    style="background-color: #f6c23e; color: #333; border: none; border-radius: 0.25rem; padding: 0.5rem 0.75rem; transition: all 0.3s ease;"
+                                                    onmouseover="this.style.backgroundColor='#e0b323'"
+                                                    onmouseout="this.style.backgroundColor='#f6c23e'"><i
                                                         class="fas fa-edit"></i></a>
-                                                <button type="button" class="btn btn-danger btn-circle btn-sm"
+                                                <button type="button" class="btn btn-sm"
+                                                    style="background-color: #e74c3c; color: white; border: none; border-radius: 0.25rem; padding: 0.5rem 0.75rem; transition: all 0.3s ease;"
                                                     data-bs-toggle="modal"
-                                                    data-bs-target="#confirmationDelete-{{ $item->id }}"><i
+                                                    data-bs-target="#confirmationDelete-{{ $item->id }}"
+                                                    onmouseover="this.style.backgroundColor='#c0392b'"
+                                                    onmouseout="this.style.backgroundColor='#e74c3c'"><i
                                                         class="fas fa-trash"></i></button>
                                             </div>
                                         @elseif (auth()->user()->role_id != 2)
@@ -109,20 +127,20 @@
                                                             style="min-width: 150px"
                                                             oninput="document.getElementById('formChangeStatus-{{ $item->id }}').submit()">
                                                             @foreach ([
-                                                                    (object)
-                                                                    [
-                                                                        'label' => 'Baru',
-                                                                        'value' => 'new',
-                                                                    ],
-                                                                    (object) [
-                                                                        'label' => 'Sedang Diproses',
-                                                                        'value' => 'processing',
-                                                                    ],
-                                                                    (object) [
-                                                                        'label' => 'Selesai',
-                                                                        'value' => 'completed',
-                                                                    ],
-                                                                ] as $status)
+            (object)
+    [
+                'label' => 'Baru',
+                'value' => 'new',
+            ],
+            (object) [
+                'label' => 'Sedang Diproses',
+                'value' => 'processing',
+            ],
+            (object) [
+                'label' => 'Selesai',
+                'value' => 'completed',
+            ],
+        ] as $status)
                                                                 <option value="{{ $status->value }}"
                                                                     @selected($item->status == $status->value)>{{ $status->label }}
                                                                 </option>
@@ -140,10 +158,10 @@
                                 @include('pages.complaint.confirmation-delete')
                             @empty
                                 <tr>
-                                    <td colspan="{{ $role_id != 2 ? '8' : '6' }}" class="text-center">
-                                        <img src="{{ asset('template/img/undraw_posting_photo.svg') }}" alt="No Data"
-                                            style="height: 100px;" class="mb-3 d-block mx-auto">
-                                        <h6 class="text-gray-500">Data aduan belum tersedia.</h6>
+                                    <td colspan="{{ auth()->user()->role_id != 2 ? '8' : '6' }}" class="text-center py-5">
+                                        <i class="fas fa-inbox text-gray-300 mb-3"
+                                            style="font-size: 3rem; display: block;"></i>
+                                        <h6 class="text-gray-500 font-weight-500">Data aduan belum tersedia.</h6>
                                     </td>
                                 </tr>
                             @endforelse

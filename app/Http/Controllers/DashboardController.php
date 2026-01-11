@@ -6,6 +6,7 @@ use App\Models\Complaint;
 use App\Models\LetterRequest;
 use App\Models\News;
 use App\Models\Resident;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,6 +32,7 @@ class DashboardController extends Controller
             // Admin hanya mengurus surat yang sudah di-acc RT/RW
             'pending_letters' => LetterRequest::where('status', 'disetujui_rt_rw')->count(),
             'pending_complaints' => Complaint::where('status', 'pending')->count(),
+            'pending_accounts' => User::where('status', 'submitted')->count(),
         ];
 
         $genderData = [
@@ -74,7 +76,8 @@ class DashboardController extends Controller
         $stats = [
             'residents' => Resident::count(),
             'waiting_signature' => LetterRequest::where('status', 'disetujui_admin')->count(),
-            'total_finished' => LetterRequest::where('status', 'selesai')->count(),
+            'today_letters' => LetterRequest::where('created_at', today())->count(),
+            'total_news' => News::count(),
         ];
 
         $recentLetters = LetterRequest::with('user')
@@ -127,14 +130,12 @@ class DashboardController extends Controller
                     ->where('rw', $resident->rw);
             });
         } else {
-            // Jika akun RT tidak punya data resident, jangan tampilkan surat apa pun 
-            // atau tampilkan semua (tergantung kebijakan desa). 
-            // Di sini kita asumsikan kosong agar aman.
             $query->whereRaw('1 = 0');
         }
 
         $stats = [
-            'residents' => $resident ? Resident::where('rt', $resident->rt)->where('rw', $resident->rw)->count() : 0,
+            'residents' => Resident::count(),
+            'my_citizens' => $resident ? Resident::where('rt', $resident->rt)->where('rw', $resident->rw)->count() : 0,
             'pending_letters' => $resident ? $query->count() : 0,
             'has_resident_data' => $resident ? true : false,
         ];

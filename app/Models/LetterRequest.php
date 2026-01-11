@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Database\Factories\LetterRequestFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 class LetterRequest extends Model
 {
+    use HasFactory;
     protected $guarded = [];
 
     public function user()
@@ -22,6 +25,11 @@ class LetterRequest extends Model
     public function letterType()
     {
         return $this->belongsTo(LetterType::class);
+    }
+
+    protected static function newFactory()
+    {
+        return LetterRequestFactory::new();
     }
 
     public function viewOwnScope($query)

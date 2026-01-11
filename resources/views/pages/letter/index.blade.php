@@ -4,10 +4,13 @@
     <div class="container-fluid">
 
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Layanan Surat Menyurat</h1>
+            <h1 class="h3 mb-0 text-gray-800">
+                <i class="fas fa-envelope text-primary mr-2"></i>Layanan Surat Menyurat
+            </h1>
             @if (Auth::user()->role_id !== 1)
-                <a href="/letters/create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                    <i class="fas fa-plus fa-sm text-white-50"></i> Buat Permohonan Surat
+                <a href="/letters/create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                    style="background: linear-gradient(135deg, #4e73df 0%, #2e59d9 100%); border: none;">
+                    <i class="fas fa-plus fa-sm text-white-50 mr-2"></i>Buat Permohonan Surat
                 </a>
             @endif
         </div>
@@ -20,25 +23,27 @@
             <div class="alert alert-danger">{{ session('error') }}</div>
         @endif
 
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Daftar Permohonan Surat</h6>
+        <div class="card shadow-lg mb-4" style="border: none; border-radius: 0.75rem;">
+            <div class="card-header py-3"
+                style="background: linear-gradient(135deg, #4e73df 0%, #2e59d9 100%); border-bottom: none;">
+                <h6 class="m-0 font-weight-bold text-white">
+                    <i class="fas fa-list mr-2"></i>Daftar Permohonan Surat
+                </h6>
             </div>
-            <div class="card-body">
-                <div>
-                    <table class="table table-bordered table-responsive table-striped table-hover" id="dataTable"
-                        width="100%" cellspacing="0">
-                        <thead class="text-center">
+            <div class="card-body" style="padding: 1.5rem;">
+                <div class="table-responsive">
+                    <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+                        <thead style="background-color: #f8f9fa; border-bottom: 2px solid #e3e6f0;">
                             <tr>
-                                <th>No</th>
-                                <th>Tanggal</th>
+                                <th class="text-center align-middle font-weight-600 text-gray-800">No</th>
+                                <th class="text-center align-middle font-weight-600 text-gray-800">Tanggal</th>
                                 @if (Auth::user()->role_id == 3)
-                                    <th>Nama Pemohon</th>
+                                    <th class="text-center align-middle font-weight-600 text-gray-800">Nama Pemohon</th>
                                 @endif
-                                <th>Jenis Surat</th>
-                                <th>Keperluan</th>
-                                <th>Status</th>
-                                <th>Aksi</th>
+                                <th class="text-center align-middle font-weight-600 text-gray-800">Jenis Surat</th>
+                                <th class="text-center align-middle font-weight-600 text-gray-800">Keperluan</th>
+                                <th class="text-center align-middle font-weight-600 text-gray-800">Status</th>
+                                <th class="text-center align-middle font-weight-600 text-gray-800">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -53,15 +58,22 @@
                                     <td>{!! wordwrap($item->purpose, 70, '<br>') !!}</td>
                                     <td class="text-center align-middle">
                                         @if ($item->status == 'pending')
-                                            <span class="badge badge-primary">Menunggu</span>
+                                            <span class="badge"
+                                                style="background-color: #4e73df; color: white; padding: 0.5rem 0.75rem; border-radius: 0.25rem;">Menunggu</span>
                                         @elseif($item->status == 'disetujui_rt_rw')
-                                            <span class="badge badge-success">Disetujui RT/RW</span>
+                                            <span class="badge"
+                                                style="background-color: #1cc88a; color: white; padding: 0.5rem 0.75rem; border-radius: 0.25rem;">Disetujui
+                                                RT/RW</span>
                                         @elseif ($item->status == 'disetujui_admin')
-                                            <span class="badge badge-warning">Menunggu Tanda Tangan</span>
+                                            <span class="badge"
+                                                style="background-color: #f6c23e; color: #333; padding: 0.5rem 0.75rem; border-radius: 0.25rem;">Menunggu
+                                                Tanda Tangan</span>
                                         @elseif ($item->status == 'selesai')
-                                            <span class="badge badge-success">Selesai</span>
+                                            <span class="badge"
+                                                style="background-color: #1cc88a; color: white; padding: 0.5rem 0.75rem; border-radius: 0.25rem;">Selesai</span>
                                         @else
-                                            <span class="badge badge-danger">Ditolak</span>
+                                            <span class="badge"
+                                                style="background-color: #e74c3c; color: white; padding: 0.5rem 0.75rem; border-radius: 0.25rem;">Ditolak</span>
                                         @endif
                                     </td>
                                     <td class="text-center text-nowrap align-middle">
@@ -137,7 +149,11 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7" class="text-center">Belum ada data permohonan surat.</td>
+                                    <td colspan="7" class="text-center py-5">
+                                        <i class="fas fa-inbox text-gray-300 mb-3"
+                                            style="font-size: 3rem; display: block;"></i>
+                                        <h6 class="text-gray-500 font-weight-500">Belum ada data permohonan surat.</h6>
+                                    </td>
                                 </tr>
                             @endforelse
                         </tbody>
