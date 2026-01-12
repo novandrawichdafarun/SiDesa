@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">
-            <i class="fas fa-users text-primary mr-2"></i>Daftar Akun Penduduk
-        </h1>
-    </div>
-
-    {{-- ... card body ... --}}
     <div class="container-fluid">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">
+                <i class="fas fa-users text-primary mr-2"></i>Daftar Akun Penduduk
+            </h1>
+        </div>
+
+        {{-- ... card body ... --}}
         <div class="card shadow-lg mb-4" style="border: none; border-radius: 0.75rem;">
             <div class="card-header py-3"
                 style="background: linear-gradient(135deg, #4e73df 0%, #2e59d9 100%); border-bottom: none;">

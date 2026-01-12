@@ -1,41 +1,41 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">
-            <i
-                class="fas fa-exclamation-circle text-primary mr-2"></i>{{ auth()->user()->role_id == 3 ? 'Aduan Warga' : 'Aduan' }}
-        </h1>
-        @if (isset(auth()->user()->resident))
-            <a href="/complaint/create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
-                style="background: linear-gradient(135deg, #4e73df 0%, #2e59d9 100%); border: none;">
-                <i class="fas fa-plus fa-sm text-white-50 mr-2"></i>Buat Aduan
-            </a>
-        @endif
-    </div>
-
-    @if (session('success'))
-        <script>
-            Swal.fire({
-                title: "Berhasil",
-                Text: "{{ session()->get('success') }}",
-                icon: "success"
-            });
-        </script>
-    @endif
-
-    @if (session('error'))
-        <script>
-            Swal.fire({
-                title: "Terjadi Kesalahan!",
-                Text: "{{ session()->get('error') }}",
-                icon: "error"
-            });
-        </script>
-    @endif
-
-    {{-- Tabel --}}
     <div class="container-fluid">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">
+                <i
+                    class="fas fa-exclamation-circle text-primary mr-2"></i>{{ auth()->user()->role_id == 3 ? 'Aduan Warga' : 'Aduan' }}
+            </h1>
+            @if (isset(auth()->user()->resident))
+                <a href="/complaint/create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                    style="background: linear-gradient(135deg, #4e73df 0%, #2e59d9 100%); border: none;">
+                    <i class="fas fa-plus fa-sm text-white-50 mr-2"></i>Buat Aduan
+                </a>
+            @endif
+        </div>
+
+        @if (session('success'))
+            <script>
+                Swal.fire({
+                    title: "Berhasil",
+                    Text: "{{ session()->get('success') }}",
+                    icon: "success"
+                });
+            </script>
+        @endif
+
+        @if (session('error'))
+            <script>
+                Swal.fire({
+                    title: "Terjadi Kesalahan!",
+                    Text: "{{ session()->get('error') }}",
+                    icon: "error"
+                });
+            </script>
+        @endif
+
+        {{-- Tabel --}}
         <div class="card shadow-lg mb-4" style="border: none; border-radius: 0.75rem;">
             <div class="card-header py-3"
                 style="background: linear-gradient(135deg, #4e73df 0%, #2e59d9 100%); border-bottom: none;">

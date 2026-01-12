@@ -6,8 +6,10 @@ use App\Http\Controllers\ResidentController;
 use App\Http\Controllers\UserController;
 use App\http\Controllers\ComplaintController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GlobalSearchController;
 use App\Http\Controllers\LetterRequestController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\VillageFundController;
 use Illuminate\Support\Facades\DB;
 
 //? Auth
@@ -16,10 +18,6 @@ Route::post('/login', [AuthController::class, 'authenticate']);
 Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('/register', [AuthController::class, 'registerView']);
 Route::post('/register', [AuthController::class, 'register']);
-
-// Route::get('/dashboard', function () {
-//     return view('pages.dashboard');
-// })->middleware('role:Admin,User');
 
 Route::get('/notification', function () {
     return view('pages.notifications');
@@ -44,6 +42,7 @@ Route::get('verify-letter/{id}/{hash}', [LetterRequestController::class, 'verify
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -157,3 +156,22 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/news', [NewsController::class, 'store'])->name('news.store')->middleware('role:Admin,Kades');
     Route::delete('/news/{news}', [NewsController::class, 'destroy'])->name('news.destroy')->middleware('role:Admin,Kades');
 });
+
+// Group untuk fitur yang butuh Login (Admin/Kades) untuk Mengelola Data
+Route::middleware(['auth', 'role:Admin,Kades'])->group(function () {
+    Route::post('/funds/category', [VillageFundController::class, 'storeCategory'])->name('funds.category.store');
+    Route::put('/funds/category/{id}', [VillageFundController::class, 'updateCategory'])->name('funds.category.update');
+    Route::delete('/funds/category/{id}', [VillageFundController::class, 'destroyCategory'])->name('funds.category.destroy');
+
+    Route::post('/funds/transaction', [VillageFundController::class, 'storeTransaction'])->name('funds.transaction.store');
+    Route::delete('/funds/transaction/{id}', [VillageFundController::class, 'destroyTransaction'])->name('funds.transaction.destroy');
+});
+
+// Group Public (Bisa diakses siapa saja atau user login)
+// Jika ingin hanya user login yang bisa lihat, masukkan ke middleware auth
+Route::middleware(['auth'])->group(function () {
+    Route::get('/funds', [VillageFundController::class, 'index'])->name('funds.index');
+});
+
+
+Route::get('/ajax-global-search', [GlobalSearchController::class, 'ajaxSearch'])->name('global.ajax.search');

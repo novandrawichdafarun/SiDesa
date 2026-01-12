@@ -7,16 +7,25 @@
 
     <!-- Topbar Search -->
     <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+        @csrf
         <div class="input-group">
-            <input type="text" class="form-control bg-light border-primary border-1 small rounded-pill"
-                placeholder="Cari sesuatu..." aria-label="Search" aria-describedby="basic-addon2"
-                style="max-width: 300px;">
+            {{-- ID ditambahkan di sini: id="navbar-search-input" --}}
+            <input type="text" class="form-control bg-light border-0 small navbar-search-input"
+                placeholder="Cari halaman, penduduk, berita..." aria-label="Search" aria-describedby="basic-addon2"
+                id="navbar-search-input" autocomplete="off">
+
             <div class="input-group-append">
-                <button class="btn btn-primary btn-sm rounded-right" type="button">
+                <button class="btn btn-primary" type="button">
                     <i class="fas fa-search fa-sm"></i>
                 </button>
             </div>
         </div>
+
+        {{-- Container untuk Hasil Search --}}
+        <div id="search-results-container">
+            {{-- Hasil akan muncul di sini via JS --}}
+        </div>
+
     </form>
 
     <!-- Topbar Navbar -->
@@ -181,5 +190,145 @@
             font-size: 0.65rem;
             font-weight: bold;
         }
+
+        /* Style untuk hasil pencarian real-time */
+        #search-results-container {
+            position: absolute;
+            top: calc(100% + 5px);
+            left: 0;
+            right: 0;
+            z-index: 9999;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 0.35rem;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.25);
+            display: none;
+            /* Sembunyikan default */
+            max-height: 500px;
+            overflow-y: auto;
+            min-width: 300px;
+        }
+
+        .navbar-search {
+            position: relative;
+        }
+
+        .search-result-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eaecf4;
+            display: block;
+            color: #858796;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-item:hover {
+            background-color: #f8f9fc;
+            color: #4e73df;
+            text-decoration: none;
+            border-left: 3px solid #4e73df;
+            padding-left: 12px;
+        }
+
+        .search-result-category {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #b7b9cc;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
     </style>
 </nav>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const searchInput = document.getElementById('navbar-search-input');
+        const resultsContainer = document.getElementById('search-results-container');
+        let timeout = null; // Untuk debounce (mencegah request berlebihan)
+
+        // Event saat mengetik
+        if (searchInput) {
+            searchInput.addEventListener('keyup', function() {
+                clearTimeout(timeout);
+                const query = this.value.trim();
+
+                // Kosongkan hasil jika input kosong
+                if (query.length < 2) {
+                    resultsContainer.style.display = 'none';
+                    resultsContainer.innerHTML = '';
+                    return;
+                }
+
+                // Tunggu 200ms setelah user berhenti mengetik baru kirim request
+                timeout = setTimeout(function() {
+                    console.log('Searching for:', query); // Debug log
+
+                    const searchUrl = new URL('{{ route('global.ajax.search') }}', window
+                        .location.origin);
+                    searchUrl.searchParams.append('query', query);
+
+                    fetch(searchUrl)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok: ' + response
+                                    .status);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log('Search results:', data); // Debug log
+                            resultsContainer.innerHTML = ''; // Reset isi
+
+                            if (data && data.length > 0) {
+                                resultsContainer.style.display = 'block';
+
+                                data.forEach(item => {
+                                    const html = `
+                                        <a href="${item.url}" class="search-result-item">
+                                            <div class="d-flex align-items-center">
+                                                <div class="mr-3">
+                                                    <div class="icon-circle bg-primary text-white" style="width: 30px; height: 30px; display:flex; align-items:center; justify-content:center; border-radius:50%;">
+                                                        <i class="${item.icon}"></i>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="search-result-category">${item.category}</div>
+                                                    <span class="font-weight-bold">${item.title}</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    `;
+                                    resultsContainer.insertAdjacentHTML('beforeend',
+                                        html);
+                                });
+                            } else {
+                                resultsContainer.style.display = 'block';
+                                resultsContainer.innerHTML =
+                                    '<div class="p-3 text-center text-muted small">Data tidak ditemukan</div>';
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error fetching search results:', error);
+                            resultsContainer.style.display = 'block';
+                            resultsContainer.innerHTML =
+                                '<div class="p-3 text-center text-danger small">Error loading results</div>';
+                        });
+                }, 200);
+            });
+
+            // Sembunyikan hasil saat klik di luar area search
+            document.addEventListener('click', function(e) {
+                if (searchInput && resultsContainer) {
+                    if (!searchInput.contains(e.target) && !resultsContainer.contains(e.target)) {
+                        resultsContainer.style.display = 'none';
+                    }
+                }
+            });
+        }
+    });
+</script>

@@ -7,7 +7,7 @@
 <!-- Stat Cards -->
 <div class="row mb-4">
     <div class="col-xl-3 col-md-6 mb-3">
-        <a href="/resident">
+        <a href="/resident" class="text-decoration-none">
             <div class="card border-0 shadow-sm stat-card h-100 bg-gradient-primary">
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between">
@@ -26,7 +26,7 @@
     </div>
 
     <div class="col-xl-3 col-md-6 mb-3">
-        <a href="/letters">
+        <a href="/letters" class="text-decoration-none">
             <div class="card border-0 shadow-sm stat-card h-100 bg-gradient-warning">
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between">
@@ -45,7 +45,7 @@
     </div>
 
     <div class="col-xl-3 col-md-6 mb-3">
-        <a href="/account-request">
+        <a href="/account-request" class="text-decoration-none">
             <div class="card border-0 shadow-sm stat-card h-100 bg-gradient-info">
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between">
@@ -64,7 +64,7 @@
     </div>
 
     <div class="col-xl-3 col-md-6 mb-3">
-        <a href="/complaint">
+        <a href="/complaint" class="text-decoration-none">
             <div class="card border-0 shadow-sm stat-card h-100 bg-gradient-danger">
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between">

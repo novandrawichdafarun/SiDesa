@@ -36,6 +36,11 @@
                 'path' => 'news',
                 'icon' => 'fas fa-fw fa-newspaper',
             ],
+            (object) [
+                'title' => 'Keuangan Desa',
+                'path' => 'funds',
+                'icon' => 'fas fa-fw fa-wallet',
+            ],
         ],
         2 => [
             (object) [
@@ -58,6 +63,11 @@
                 'path' => 'news',
                 'icon' => 'fas fa-fw fa-newspaper',
             ],
+            (object) [
+                'title' => 'Keuangan Desa',
+                'path' => 'funds',
+                'icon' => 'fas fa-fw fa-wallet',
+            ],
         ],
         3 => [
             (object) [
@@ -79,6 +89,11 @@
                 'title' => 'Portal Berita',
                 'path' => 'news',
                 'icon' => 'fas fa-fw fa-newspaper',
+            ],
+            (object) [
+                'title' => 'Keuangan Desa',
+                'path' => 'funds',
+                'icon' => 'fas fa-fw fa-wallet',
             ],
         ],
         4 => [
@@ -130,11 +145,6 @@
             <a class="nav-link d-flex align-items-center" href="/{{ $menu->path }}">
                 <i class="{{ $menu->icon }} fa-lg mr-3"></i>
                 <span class="font-weight-500">{{ $menu->title }}</span>
-                @if (request()->is($menu->path . '*'))
-                    <span class="ml-auto">
-                        <i class="fas fa-chevron-right fa-sm"></i>
-                    </span>
-                @endif
             </a>
         </li>
     @endforeach

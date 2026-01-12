@@ -1,38 +1,38 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">
-            <i class="fas fa-users text-primary mr-2"></i>Data Penduduk
-        </h1>
-        <a href="/resident/create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
-            style="background: linear-gradient(135deg, #4e73df 0%, #2e59d9 100%); border: none;">
-            <i class="fas fa-plus fa-sm text-white-50 mr-2"></i>Tambah Penduduk
-        </a>
-    </div>
-
-    @if (session('success'))
-        <script>
-            Swal.fire({
-                title: "Berhasil",
-                Text: "{{ session()->get('success') }}",
-                icon: "success"
-            });
-        </script>
-    @endif
-
-    @if (session('error'))
-        <script>
-            Swal.fire({
-                title: "Terjadi Kesalahan!",
-                Text: "{{ session()->get('error') }}",
-                icon: "error"
-            });
-        </script>
-    @endif
-
-    {{-- Tabel --}}
     <div class="container-fluid">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">
+                <i class="fas fa-users text-primary mr-2"></i>Data Penduduk
+            </h1>
+            <a href="/resident/create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                style="background: linear-gradient(135deg, #4e73df 0%, #2e59d9 100%); border: none;">
+                <i class="fas fa-plus fa-sm text-white-50 mr-2"></i>Tambah Penduduk
+            </a>
+        </div>
+
+        @if (session('success'))
+            <script>
+                Swal.fire({
+                    title: "Berhasil",
+                    Text: "{{ session()->get('success') }}",
+                    icon: "success"
+                });
+            </script>
+        @endif
+
+        @if (session('error'))
+            <script>
+                Swal.fire({
+                    title: "Terjadi Kesalahan!",
+                    Text: "{{ session()->get('error') }}",
+                    icon: "error"
+                });
+            </script>
+        @endif
+
+        {{-- Tabel --}}
         <div class="card shadow-lg mb-4" style="border: none; border-radius: 0.75rem;">
             <div class="card-header py-3"
                 style="background: linear-gradient(135deg, #4e73df 0%, #2e59d9 100%); border-bottom: none;">
@@ -81,7 +81,13 @@
                                     <td class="align-middle">{{ $item->birth_place }},
                                         {{ date('d-m-Y', strtotime($item->birth_date)) }}</td>
                                     <td class="align-middle">{{ $item->address }}</td>
-                                    <td class="align-middle">RT {{ $item->rt }} / RW {{ $item->rw }}</td>
+                                    <td class="align-middle">
+                                        @if (isset($item->rt) && isset($item->rw))
+                                            RT {{ $item->rt }} / RW {{ $item->rw }}
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
                                     <td class="align-middle">{{ $item->religion }}</td>
                                     <td class="text-center align-middle">
                                         @if ($item->marital_status == 'single')

@@ -1,14 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">
-            <i class="fas fa-user-check text-primary mr-2"></i>Permintaan Akun
-        </h1>
-    </div>
-
     {{-- Tabel --}}
     <div class="container-fluid">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">
+                <i class="fas fa-user-check text-primary mr-2"></i>Permintaan Akun
+            </h1>
+        </div>
+
+        {{-- ... card body ... --}}
         <div class="card shadow-lg mb-4" style="border: none; border-radius: 0.75rem;">
             <div class="card-header py-3"
                 style="background: linear-gradient(135deg, #4e73df 0%, #2e59d9 100%); border-bottom: none;">
@@ -36,11 +37,11 @@
                                     <td class="align-middle">{{ $item->email }}</td>
                                     <td class="text-center align-middle">
                                         <span class="badge"
-                                            style="background-color: #f6c23e; color: #333; padding: 0.5rem 0.75rem; border-radius: 0.25rem;">{{ $item->status }}</span>
+                                            style="background-color: #f6c23e; color: #333; padding: 0.5rem 0.75rem; border-radius: 0.25rem;">{{ $item->status == 'submitted' ? 'Menunggu' : 'Diterima' }}</span>
                                     </td>
                                     <td class="text-center align-middle">
-                                        <div class="d-flex justify-content-center gap-2">
-                                            <button type="button" class="btn btn-sm"
+                                        <div class="d-flex justify-content-center">
+                                            <button type="button" class="btn btn-sm mr-2"
                                                 style="background-color: #1cc88a; color: white; border: none; border-radius: 0.25rem; padding: 0.5rem 0.75rem; transition: all 0.3s ease;"
                                                 data-toggle="modal" data-target="#modalApprove{{ $item->id }}"
                                                 onmouseover="this.style.backgroundColor='#15a26e'"
