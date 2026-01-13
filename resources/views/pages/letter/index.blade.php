@@ -36,7 +36,7 @@
                             <tr>
                                 <th class="text-center align-middle font-weight-600 text-gray-800">No</th>
                                 <th class="text-center align-middle font-weight-600 text-gray-800">Tanggal</th>
-                                @if (Auth::user()->role_id == 3)
+                                @if (Auth::user()->role_id != 2)
                                     <th class="text-center align-middle font-weight-600 text-gray-800">Nama Pemohon</th>
                                 @endif
                                 <th class="text-center align-middle font-weight-600 text-gray-800">Jenis Surat</th>
@@ -50,7 +50,7 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->created_at->format('d M Y') }}</td>
-                                    @if (Auth::user()->role_id == 3)
+                                    @if (Auth::user()->role_id != 2)
                                         <td>{{ $item->user->name }}</td>
                                     @endif
                                     <td>{{ $item->letterType->name }}</td>

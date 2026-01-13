@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
     {
         User::create([
             'id' => 1,
-            'name' => 'Admin SiDesa',
+            'name' => 'Admin Desa Nyeni',
             'email' => 'admin@gmail.com',
             'password' => 'password',
             'status' => 'approved',
@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
 
         User::create([
             'id' => 3,
-            'name' => 'Kades SiDesa',
+            'name' => 'Kades Desa Nyeni',
             'email' => 'kades@gmail.com',
             'password' => 'password',
             'status' => 'approved',
@@ -52,13 +52,38 @@ class UserSeeder extends Seeder
 
         Resident::create([
             'user_id' => 2,
-            'nik' => '1234567890123456',
+            'nik' => '3508123123324567',
             'name' => 'Penduduk 1',
             'gender' => 'male',
             'birth_date' => '2000-01-01',
             'birth_place' => 'Jakarta',
+
             'address' => 'Jl. Contoh No. 1',
             'marital_status' => 'single',
+        ]);
+
+        Resident::create([
+            'user_id' => 3,
+            'nik' => '3503210987654321',
+            'name' => 'Kades Desa Nyeni',
+            'gender' => 'male',
+            'birth_date' => '1980-12-12',
+            'birth_place' => 'Bandung',
+            'address' => 'Jl. Contoh No. 3',
+            'marital_status' => 'married',
+        ]);
+
+        Resident::create([
+            'user_id' => 4,
+            'nik' => '3508123123324567',
+            'name' => 'RT01 Desa Nyeni',
+            'gender' => 'male',
+            'birth_date' => '1990-05-15',
+            'birth_place' => 'Surabya',
+            'address' => 'Jl. Contoh No. 2',
+            'rt' => '01',
+            'rw' => '01',
+            'marital_status' => 'married',
         ]);
     }
 }

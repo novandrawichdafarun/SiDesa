@@ -272,84 +272,88 @@
 
     </div>
     @if (auth()->user()->role_id == 1 || auth()->user()->role_id == 3)
-        <div class="modal fade" id="editCategoryModal{{ $category->id }}" tabindex="-1">
-            <div class="modal-dialog">
-                <form class="modal-content" action="{{ route('funds.category.update', $category->id) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <div class="modal-header">
-                        <h5 class="modal-title">Edit Pos Anggaran</h5>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>Nama Pos</label>
-                            <input type="text" name="name" class="form-control" value="{{ $category->name }}"
-                                required>
+        @foreach ($categories as $category)
+            <div class="modal fade" id="editCategoryModal{{ $category->id }}" tabindex="-1">
+                <div class="modal-dialog">
+                    <form class="modal-content" action="{{ route('funds.category.update', $category->id) }}"
+                        method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit Pos Anggaran</h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
-                        <div class="form-group">
-                            <label>Pagu Anggaran (Rp)</label>
-                            <input type="number" name="budget_cap" class="form-control"
-                                value="{{ $category->budget_cap }}" required>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Nama Pos</label>
+                                <input type="text" name="name" class="form-control" value="{{ $category->name }}"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label>Pagu Anggaran (Rp)</label>
+                                <input type="number" name="budget_cap" class="form-control"
+                                    value="{{ $category->budget_cap }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Keterangan</label>
+                                <textarea name="description" class="form-control">{{ $category->description }}</textarea>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>Keterangan</label>
-                            <textarea name="description" class="form-control">{{ $category->description }}</textarea>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-primary">Simpan
+                                Perubahan</button>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan
-                            Perubahan</button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
-        </div>
 
-        <div class="modal fade" id="addTransactionModal{{ $category->id }}" tabindex="-1">
-            <div class="modal-dialog">
-                <form class="modal-content" action="/funds/transaction" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method('POST')
-                    <input type="hidden" name="fund_category_id" value="{{ $category->id }}">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Catat Realisasi: {{ $category->name }}
-                        </h5>
-                        <button type="button" class="close" data-dismiss="modal" data-bs-dismiss="modal"
-                            aria-label="Close">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>Tanggal Transaksi</label>
-                            <input type="date" name="transaction_date" class="form-control"
-                                value="{{ date('Y-m-d') }}" required>
+            <div class="modal fade" id="addTransactionModal{{ $category->id }}" tabindex="-1">
+                <div class="modal-dialog">
+                    <form class="modal-content" action="/funds/transaction" method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
+                        @method('POST')
+                        <input type="hidden" name="fund_category_id" value="{{ $category->id }}">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Catat Realisasi: {{ $category->name }}
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" data-bs-dismiss="modal"
+                                aria-label="Close">&times;</button>
                         </div>
-                        <div class="form-group">
-                            <label>Uraian / Judul</label>
-                            <input type="text" name="title" class="form-control"
-                                placeholder="Contoh: Pembelian Semen 50 Sak" required>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Tanggal Transaksi</label>
+                                <input type="date" name="transaction_date" class="form-control"
+                                    value="{{ date('Y-m-d') }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Uraian / Judul</label>
+                                <input type="text" name="title" class="form-control"
+                                    placeholder="Contoh: Pembelian Semen 50 Sak" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Nominal (Rp)</label>
+                                <input type="number" name="amount" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Bukti (Foto/Nota)</label>
+                                <input type="file" name="proof_file" class="form-control-file"
+                                    accept="image/*,application/pdf">
+                                <small class="text-muted">Opsional. Format: JPG, PNG. Max
+                                    2MB.</small>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>Nominal (Rp)</label>
-                            <input type="number" name="amount" class="form-control" required>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                data-bs-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-primary">Simpan
+                                Transaksi</button>
                         </div>
-                        <div class="form-group">
-                            <label>Bukti (Foto/Nota)</label>
-                            <input type="file" name="proof_file" class="form-control-file"
-                                accept="image/*,application/pdf">
-                            <small class="text-muted">Opsional. Format: JPG, PNG. Max
-                                2MB.</small>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                            data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan
-                            Transaksi</button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
-        </div>
+        @endforeach
     @endif
 
     @if (auth()->user()->role_id == 1 || auth()->user()->role_id == 3)

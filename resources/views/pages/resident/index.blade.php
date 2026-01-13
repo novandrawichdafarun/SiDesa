@@ -149,7 +149,7 @@
                                 @include('pages.resident.confirmation-delete')
                             @empty
                                 <tr>
-                                    <td colspan="12" class="text-center py-5">
+                                    <td colspan="13" class="text-center py-5">
                                         <i class="fas fa-inbox text-gray-300 mb-3"
                                             style="font-size: 3rem; display: block;"></i>
                                         <h6 class="text-gray-500 font-weight-500">Data penduduk belum tersedia.</h6>

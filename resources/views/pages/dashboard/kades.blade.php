@@ -105,56 +105,58 @@
         </div>
     </div>
 </div>
-<div class="row">-sm border-0 mb-4">
-    <div class="card-header bg-gradient-primary py-3">
-        <h6 class="m-0 font-weight-bold text-white">
-            <i class="fas fa-list mr-2"></i>Antrean Pengajuan Surat Terbaru
-        </h6>
+<div class="row">
+    <div class="col-xl-12 col-lg-7 mb-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-gradient-primary py-3">
+                <h6 class="m-0 font-weight-bold text-white">
+                    <i class="fas fa-list mr-2"></i>Antrean Pengajuan Surat Terbaru
+                </h6>
+            </div>
+            <div class="card-body p-0">
+                @if (isset($recentLetters) && count($recentLetters) > 0)
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th class="border-0">Tanggal</th>
+                                    <th class="border-0">Pengaju</th>
+                                    <th class="border-0">Jenis Surat</th>
+                                    <th class="border-0">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($recentLetters as $letter)
+                                    <tr>
+                                        <td class="small text-muted">{{ $letter->created_at->format('d M Y') }}</td>
+                                        <td class="font-weight-600">{{ $letter->user->name }}</td>
+                                        <td>{{ $letter->letterType->name ?? 'Surat Keterangan' }}</td>
+                                        <td>
+                                            <span
+                                                class="badge badge-{{ $letter->status == 'disetujui_rt_rw' ? 'warning' : ($letter->status == 'disetujui_admin' ? 'success' : 'danger') }}">
+                                                {{ ucfirst($letter->status) }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                @empty
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer bg-white border-top">
+                        <a href="/letters" class="btn btn-sm btn-primary">
+                            <i class="fas fa-eye mr-1"></i>Lihat Semua
+                        </a>
+                    </div>
+                @else
+                    <div class="text-center py-5 text-muted">
+                        <i class="fas fa-inbox fa-3x mb-3 d-block text-gray-300"></i>
+                        <p class="mb-0">Tidak ada surat yang perlu di tanda tangani saat ini.</p>
+                    </div>
+                @endif
+            </div>
+        </div>
     </div>
-    <div class="card-body p-0">
-        @if (isset($recentLetters) && count($recentLetters) > 0)
-            <div class="table-responsive">
-                <table class="table table-hover mb-0">
-                    <thead class="bg-light">
-                        <tr>
-                            <th class="border-0">Tanggal</th>
-                            <th class="border-0">Pengaju</th>
-                            <th class="border-0">Jenis Surat</th>
-                            <th class="border-0">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($recentLetters as $letter)
-                            <tr>
-                                <td class="small text-muted">{{ $letter->created_at->format('d M Y') }}</td>
-                                <td class="font-weight-600">{{ $letter->user->name }}</td>
-                                <td>{{ $letter->letterType->name ?? 'Surat Keterangan' }}</td>
-                                <td>
-                                    <span
-                                        class="badge badge-{{ $letter->status == 'disetujui_rt_rw' ? 'warning' : ($letter->status == 'disetujui_admin' ? 'success' : 'danger') }}">
-                                        {{ ucfirst($letter->status) }}
-                                    </span>
-                                </td>
-                            </tr>
-                        @empty
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-            <div class="card-footer bg-white border-top">
-                <a href="/letters" class="btn btn-sm btn-primary">
-                    <i class="fas fa-eye mr-1"></i>Lihat Semua
-                </a>
-            </div>
-        @else
-            <div class="text-center py-5 text-muted">
-                <i class="fas fa-inbox fa-3x mb-3 d-block text-gray-300"></i>
-                <p class="mb-0">Tidak ada surat yang perlu di tanda tangani saat ini.</p>
-            </div>
-        @endif
-    </div>
-</div>
-</div>
 </div>
 
 <!-- News Feed Section -->
@@ -262,8 +264,10 @@
     .news-card img:hover {
         transform: scale(1.05);
     }
+</style>
 
-    </style </div>@endif</div>@push('scripts') <script>
+@push('scripts')
+    <script>
         // --- Chart Tren Pengaduan (Line Chart) ---
         var ctxComplaint = document.getElementById("complaintChart");
         var complaintChart = new Chart(ctxComplaint, {
@@ -361,4 +365,5 @@
                 cutoutPercentage: 70,
             },
         });
-    </script>@endpush
+    </script>
+@endpush

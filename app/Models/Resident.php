@@ -11,6 +11,11 @@ class Resident extends Model
     use HasFactory;
 
     protected $table = 'residents';
+
+    protected $fillable = [
+        'rt',
+        'rw'
+    ];
     protected $guarded = [];
 
     protected static function newFactory()

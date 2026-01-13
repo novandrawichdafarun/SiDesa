@@ -122,20 +122,34 @@ class DashboardController extends Controller
         $resident = $user->resident;
         $query = LetterRequest::with(['user', 'letterType'])->where('status', 'pending');
         $newsFeed = News::latest()->take(3)->get();
+        $my_citizens = Resident::query();
 
         // Jika data resident ada, filter berdasarkan RT/RW resident tersebut
         if ($resident) {
-            $query->whereHas('user.resident', function ($q) use ($resident) {
-                $q->where('rt', $resident->rt)
-                    ->where('rw', $resident->rw);
-            });
+            $rt = $resident->rt;
+            $rw = $resident->rw;
+            if ($rt) {
+                $query->whereHas('user.resident', function ($q) use ($rt) {
+                    $q->where('rt', $rt);
+                });
+                $my_citizens->where('rt', $rt);
+            } else if ($rw) {
+                $query->whereHas('user.resident', function ($q) use ($rw) {
+                    $q->where('rw', $rw);
+                });
+                $my_citizens->where('rw', $rw);
+            } else {
+                $query->whereNull('id'); // jika RT dan RW kosong, tidak menampilkan data
+                $my_citizens->whereNull('id'); // jika RT dan RW kosong, tidak menampilkan data
+            }
         } else {
             $query->whereRaw('1 = 0');
+            $my_citizens->whereRaw('1 = 0');
         }
 
         $stats = [
             'residents' => Resident::count(),
-            'my_citizens' => $resident ? Resident::where('rt', $resident->rt)->where('rw', $resident->rw)->count() : 0,
+            'my_citizens' => $my_citizens->count(),
             'pending_letters' => $resident ? $query->count() : 0,
             'has_resident_data' => $resident ? true : false,
         ];

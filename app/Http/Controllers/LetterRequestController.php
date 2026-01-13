@@ -15,8 +15,25 @@ class LetterRequestController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->role_id !== 2) {
+        if ($user->role_id != 2 && $user->role_id != 4) {
             $requests = LetterRequest::with(['user', 'letterType'])->latest()->get();
+        } else if ($user->role_id == 4) {
+            $resident = $user->resident;
+            $rt = $resident->rt;
+            $rw = $resident->rw;
+
+            $requests = LetterRequest::with('letterType')
+                ->whereHas('user.resident', function ($query) use ($rt, $rw) {
+                    if ($rt) {
+                        $query->where('rt', $rt);
+                    } elseif ($rw) {
+                        $query->where('rw', $rw);
+                    } else {
+                        $query->whereNull('id'); // jika RT dan RW kosong, tidak menampilkan data
+                    }
+                })
+                ->latest()
+                ->get();
         } else {
             $requests = LetterRequest::with('letterType')->where('user_id', $user->id)->latest()->get();
         }

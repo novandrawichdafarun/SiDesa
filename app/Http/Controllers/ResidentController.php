@@ -11,9 +11,31 @@ class ResidentController extends Controller
 {
     public function index()
     {
-        $residents = Resident::with('user')->get();
+        $user = Auth::user();
+        $query = Resident::query();
+        $resident = $user->resident;
+
+        //? filter data sesuai RT/RW jika user adalah RT/RW
+        if ($user->role_id === 4) {
+            if ($resident) {
+                $rt = $resident->rt;
+                $rw = $resident->rw;
+            }
+            if ($rt) {
+                $query->where('rt', $rt);
+            } elseif ($rw) {
+                $query->where('rw', $rw);
+            } else {
+                $query->whereNull('id'); // jika RT dan RW kosong, tidak menampilkan data
+            }
+            $residents = $query->latest()->get();
+        } else {
+            $residents = $query->latest()->get();
+        }
+
+
         return view('pages.resident.index', [
-            'residents' => $residents
+            'residents' => $residents ?? []
         ]);
     }
 

@@ -76,6 +76,11 @@
                 'icon' => 'fas fa-fw fa-chart-line',
             ],
             (object) [
+                'title' => 'Penduduk',
+                'path' => 'resident',
+                'icon' => 'fas fa-fw fa-users',
+            ],
+            (object) [
                 'title' => 'Pengaduan',
                 'path' => 'complaint',
                 'icon' => 'fas fa-fw fa-comments',
@@ -103,6 +108,11 @@
                 'icon' => 'fas fa-fw fa-chart-line',
             ],
             (object) [
+                'title' => 'Penduduk',
+                'path' => 'resident',
+                'icon' => 'fas fa-fw fa-users',
+            ],
+            (object) [
                 'title' => 'Pengaduan',
                 'path' => 'complaint',
                 'icon' => 'fas fa-fw fa-comments',
@@ -116,6 +126,11 @@
                 'title' => 'Portal Berita',
                 'path' => 'news',
                 'icon' => 'fas fa-fw fa-newspaper',
+            ],
+            (object) [
+                'title' => 'Keuangan Desa',
+                'path' => 'funds',
+                'icon' => 'fas fa-fw fa-wallet',
             ],
         ],
     ];

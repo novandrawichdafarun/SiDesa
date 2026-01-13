@@ -85,22 +85,16 @@ Route::middleware(['auth'])->group(function () {
         ->name('change-password.update');
 });
 
-Route::middleware(['auth'])->group(function () {
-    Route::post('/resident', [ResidentController::class, 'store'])
-        ->middleware('role:Admin');
-    Route::get('/resident/create', [ResidentController::class, 'create'])
-        ->middleware('role:Admin');
+Route::middleware(['auth', 'role:Admin,Kades,RT/RW'])->group(function () {
+    Route::post('/resident', [ResidentController::class, 'store']);
+    Route::get('/resident/create', [ResidentController::class, 'create']);
 
-    Route::put('/resident/{id}', [ResidentController::class, 'update'])
-        ->middleware('role:Admin');
-    Route::get('/resident/{id}', [ResidentController::class, 'edit'])
-        ->middleware('role:Admin');
+    Route::put('/resident/{id}', [ResidentController::class, 'update']);
+    Route::get('/resident/{id}', [ResidentController::class, 'edit']);
 
-    Route::delete('/resident/{id}', [ResidentController::class, 'destroy'])
-        ->middleware('role:Admin');
+    Route::delete('/resident/{id}', [ResidentController::class, 'destroy']);
 
-    Route::get('/resident', [ResidentController::class, 'index'])
-        ->middleware('role:Admin');
+    Route::get('/resident', [ResidentController::class, 'index']);
 });
 
 

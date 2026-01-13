@@ -14,7 +14,8 @@
                     </button>
                 </div>
                 <div class="modal-body py-4">
-                    Apakah Anda yakin ingin <b>menyetujui</b> permohonan surat atas nama {{ $item->name }}?
+                    <p class="text-wrap">Apakah Anda yakin ingin <b>menyetujui</b> permohonan surat atas nama
+                        {{ $item->user->name }}? </p>
                 </div>
                 <div class="modal-footer" style="border-top: 1px solid #e3e6f0;">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal"

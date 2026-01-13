@@ -69,7 +69,7 @@
                                         <td class="small text-muted">{{ $letter->created_at->format('d M Y') }}</td>
                                         <td>
                                             <span
-                                                class="badge badge-{{ $letter->status == 'disetujui_rt_rw' ? 'warning' : ($letter->status == 'disetujui_admin' ? 'success' : 'danger') }}">
+                                                class="badge badge-{{ $letter->status == 'disetujui_rt_rw' ? 'success' : 'warning' }}">
                                                 {{ ucfirst($letter->status) }}
                                             </span>
                                         </td>

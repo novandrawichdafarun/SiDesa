@@ -102,6 +102,26 @@
                             @enderror
                         </div>
                         <div class="form-group mb-4">
+                            <label for="rt">RT</label>
+                            <input type="text" class="form-control @error('rt') is-invalid @enderror" id="rt"
+                                name="rt" placeholder="Masukkan RT" value="{{ old('rt', $resident->rt) }}">
+                            @error('rt')
+                                <span class="invalid-feedback mt-2">
+                                    {{ $message }}
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="rw">RW</label>
+                            <input type="text" class="form-control @error('rw') is-invalid @enderror" id="rw"
+                                name="rw" placeholder="Masukkan Agama" value="{{ old('rw', $resident->rw) }}">
+                            @error('rw')
+                                <span class="invalid-feedback mt-2">
+                                    {{ $message }}
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group mb-4">
                             <label for="religion">Agama</label>
                             <input type="text" class="form-control @error('religion') is-invalid @enderror"
                                 id="religion" name="religion" placeholder="Masukkan Agama"
@@ -158,8 +178,8 @@
                         </div>
                         <div class="form-group mb-4">
                             <label for="phone">Nomor Telepon</label>
-                            <input type="number" class="form-control @error('phone') is-invalid @enderror" id="phone"
-                                name="phone" placeholder="Masukkan Nomor Telepon" inputmode="numeric"
+                            <input type="number" class="form-control @error('phone') is-invalid @enderror"
+                                id="phone" name="phone" placeholder="Masukkan Nomor Telepon" inputmode="numeric"
                                 value="{{ old('phone', $resident->phone) }}">
                             @error('phone')
                                 <span class="invalid-feedback mt-2">

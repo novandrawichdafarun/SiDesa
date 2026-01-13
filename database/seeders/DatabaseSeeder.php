@@ -35,10 +35,10 @@ class DatabaseSeeder extends Seeder
         $pendudukPerRT = 5; // Tiap RT diisi 5 penduduk dummy
 
         for ($i = 1; $i <= $jumlahRW; $i++) {
-            $noRW = str_pad($i, 3, '0', STR_PAD_LEFT); // '001', '002'
+            $noRW = str_pad($i, 2, '0', STR_PAD_LEFT); // '01', '02'
 
             for ($j = 1; $j <= $jumlahRTperRW; $j++) {
-                $noRT = str_pad($j, 3, '0', STR_PAD_LEFT); // '001', '002'
+                $noRT = str_pad($j, 2, '0', STR_PAD_LEFT); // '01', '02'
 
                 // C. Buat PENDUDUK Random di RT ini
                 // Kita gunakan UserFactory untuk membuat user random,
@@ -68,9 +68,5 @@ class DatabaseSeeder extends Seeder
                 });
             }
         }
-
-        News::factory(10)->create([
-            'user_id' => 1 // ID Admin
-        ]);
     }
 }

@@ -20,6 +20,10 @@ class VillageFundController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
+        if ($categories->isEmpty()) {
+            $categories = collect([]);
+        }
+
         //? Hitung Ringkasan
         $totalIncomePlanned = $categories->where('type', 'income')->sum('budget_cap');
         $totalIncomeRealized = $categories->where('type', 'income')->sum('realized_amount'); //! Menggunakan accessor model
