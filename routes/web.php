@@ -13,15 +13,20 @@ use App\Http\Controllers\VillageFundController;
 use Illuminate\Support\Facades\DB;
 
 //? Auth
-Route::get('/', [AuthController::class, 'login']);
-Route::post('/login', [AuthController::class, 'authenticate']);
-Route::post('/logout', [AuthController::class, 'logout']);
-Route::get('/register', [AuthController::class, 'registerView']);
-Route::post('/register', [AuthController::class, 'register']);
+Route::get('/', [AuthController::class, 'login'])
+    ->middleware('throttle:5,1');
+Route::post('/login', [AuthController::class, 'authenticate'])
+    ->middleware('throttle:10,1');
+Route::post('/logout', [AuthController::class, 'logout'])
+    ->middleware('throttle:10,1');
+Route::get('/register', [AuthController::class, 'registerView'])
+    ->middleware('throttle:5,1');
+Route::post('/register', [AuthController::class, 'register'])
+    ->middleware('throttle:10,1');
 
 Route::get('/notification', function () {
     return view('pages.notifications');
-});
+})->middleware('throttle:10,1');
 
 Route::post('/notification/{id}/read', function ($id) {
     $notification = DB::table('notifications')->where('id', $id);
@@ -36,16 +41,17 @@ Route::post('/notification/{id}/read', function ($id) {
     }
 
     return back();
-})->middleware('role:User');
+})->middleware('role:User')->middleware('throttle:10,1');
 
-Route::get('verify-letter/{id}/{hash}', [LetterRequestController::class, 'verify'])->name('letter.verify');
+Route::get('verify-letter/{id}/{hash}', [LetterRequestController::class, 'verify'])
+    ->name('letter.verify')
+    ->middleware('throttle:10,1');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'throttle:10,1'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'throttle:10,1'])->group(function () {
     Route::get('/account-request', [UserController::class, 'accountRequestView'])
         ->name('account-request.index');
 
@@ -85,7 +91,7 @@ Route::middleware(['auth'])->group(function () {
         ->name('change-password.update');
 });
 
-Route::middleware(['auth', 'role:Admin,Kades,RT/RW'])->group(function () {
+Route::middleware(['auth', 'role:Admin,Kades,RT/RW', 'throttle:10,1'])->group(function () {
     Route::post('/resident', [ResidentController::class, 'store']);
     Route::get('/resident/create', [ResidentController::class, 'create']);
 
@@ -98,7 +104,7 @@ Route::middleware(['auth', 'role:Admin,Kades,RT/RW'])->group(function () {
 });
 
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'throttle:10,1'])->group(function () {
     Route::post('/complaint', [ComplaintController::class, 'store'])
         ->middleware('role:User');
     Route::get('/complaint/create', [complaintController::class, 'create'])
@@ -118,7 +124,7 @@ Route::middleware(['auth'])->group(function () {
         ->middleware('role:Kades,Admin,RT/RW');
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'throttle:10,1'])->group(function () {
     Route::post('/letters', [LetterRequestController::class, 'store'])
         ->middleware('role:User');
 
@@ -143,7 +149,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/letters/{id}/download', [LetterRequestController::class, 'download'])->name('letter.download');
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'throttle:10,1'])->group(function () {
     Route::get('/news', [NewsController::class, 'index'])->name('news.index');
     Route::get('/news/create', [NewsController::class, 'create'])->name('news.create')->middleware('role:Admin,Kades');
     Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.show');
@@ -152,7 +158,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // Group untuk fitur yang butuh Login (Admin/Kades) untuk Mengelola Data
-Route::middleware(['auth', 'role:Admin,Kades'])->group(function () {
+Route::middleware(['auth', 'role:Admin,Kades', 'throttle:10,1'])->group(function () {
     Route::post('/funds/category', [VillageFundController::class, 'storeCategory'])->name('funds.category.store');
     Route::put('/funds/category/{id}', [VillageFundController::class, 'updateCategory'])->name('funds.category.update');
     Route::delete('/funds/category/{id}', [VillageFundController::class, 'destroyCategory'])->name('funds.category.destroy');
@@ -163,9 +169,11 @@ Route::middleware(['auth', 'role:Admin,Kades'])->group(function () {
 
 // Group Public (Bisa diakses siapa saja atau user login)
 // Jika ingin hanya user login yang bisa lihat, masukkan ke middleware auth
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'throttle:10,1'])->group(function () {
     Route::get('/funds', [VillageFundController::class, 'index'])->name('funds.index');
 });
 
 
-Route::get('/ajax-global-search', [GlobalSearchController::class, 'ajaxSearch'])->name('global.ajax.search');
+Route::get('/ajax-global-search', [GlobalSearchController::class, 'ajaxSearch'])
+    ->name('global.ajax.search')
+    ->middleware('auth');

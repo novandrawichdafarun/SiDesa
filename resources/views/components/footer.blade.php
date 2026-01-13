@@ -3,10 +3,10 @@
         <div class="row mb-3">
             <div class="col-md-6">
                 <div class="d-flex align-items-center">
-                    <i class="fas fa-building text-primary mr-2 fa-lg"></i>
+                    <img src="{{ asset('img/Logo.png') }}" alt="Desa Logo" style="height: 50px;" class="mr-2">
                     <div>
                         <h6 class="font-weight-bold text-white mb-0">Sistem Informasi Desa</h6>
-                        <small class="text-muted">SiDesa Platform</small>
+                        <small class="text-muted">Desa Nyeni</small>
                     </div>
                 </div>
             </div>
