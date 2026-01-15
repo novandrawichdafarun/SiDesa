@@ -163,14 +163,17 @@ class DashboardController extends Controller
     {
         $resident = Resident::where('user_id', $user->id)->first();
         $newsFeed = News::latest()->take(3)->get();
+        $residentId = $resident->id ?? null;
 
         if ($resident) {
-            $myLetters = LetterRequest::latest()
-                ->take(3)
+            $myLetters = LetterRequest::with('letterType')
+                ->where('user_id', $user->id)
+                ->latest()
                 ->get();
 
-            $myComplaints = Complaint::latest()
-                ->take(3)
+            $myComplaints = Complaint::with('resident')
+                ->where('resident_id', $residentId)
+                ->latest()
                 ->get();
 
         } else {

@@ -15,11 +15,41 @@ class ComplaintController extends Controller
     public function index()
     {
         $residentId = Auth::user()->resident->id ?? null;
-        $complaints = Complaint::with(['user', 'resident'])
-            ->latest()
-            ->paginate(10);
 
-        return view('pages.complaint.index', compact('complaints'));
+        if (Auth::user()->role_id != 2 && Auth::user()->role_id != 4) {
+            $complaints = Complaint::with(['user', 'resident'])
+                ->latest()
+                ->paginate(10);
+            return view('pages.complaint.index', compact('complaints'));
+        } else if (Auth::user()->role_id == 4) {
+            $resident = Auth::user()->resident;
+            $rt = $resident->rt;
+            $rw = $resident->rw;
+
+            $complaints = Complaint::with(['user', 'resident'])
+                ->whereHas('resident', function ($query) use ($rt, $rw) {
+                    if ($rt) {
+                        $query->where('rt', $rt);
+                    } elseif ($rw) {
+                        $query->where('rw', $rw);
+                    } else {
+                        $query->whereNull('id'); // jika RT dan
+                    }
+                })
+                ->latest()
+                ->paginate(10);
+            return view('pages.complaint.index', compact('complaints'));
+        } else {
+            if (!$residentId) {
+                return redirect('/')->with('error', 'Akun anda belum terhubung ke data penduduk.');
+            }
+
+            $complaints = Complaint::with(['user', 'resident'])
+                ->where('resident_id', $residentId)
+                ->latest()
+                ->paginate(10);
+            return view('pages.complaint.index', compact('complaints'));
+        }
     }
 
     public function create()

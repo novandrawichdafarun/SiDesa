@@ -57,9 +57,7 @@
                                 <th class="text-center align-middle font-weight-600 text-gray-800">Status</th>
                                 <th class="text-center align-middle font-weight-600 text-gray-800">Foto Bukti</th>
                                 <th class="text-center align-middle font-weight-600 text-gray-800">Tanggal Laporan</th>
-                                @if (auth()->user()->role_id != 2)
-                                    <th class="text-center align-middle font-weight-600 text-gray-800">Aksi</th>
-                                @endif
+                                <th class="text-center align-middle font-weight-600 text-gray-800">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -101,9 +99,9 @@
                                         {{ $item->report_date_label }}
                                     </td>
                                     <td class="text-center align-middle">
-                                        @if (auth()->user()->role_id != 2 && isset(auth()->user()->resident) && $item->status == 'new')
+                                        @if (auth()->user()->role_id == 2 && isset(auth()->user()->resident) && $item->status == 'new')
                                             <div class="d-flex align-items-center justify-content-center gap-2">
-                                                <a href="/complaint/{{ $item->id }}" class="btn btn-sm"
+                                                <a href="/complaint/{{ $item->id }}" class="btn btn-sm mr-2"
                                                     style="background-color: #f6c23e; color: #333; border: none; border-radius: 0.25rem; padding: 0.5rem 0.75rem; transition: all 0.3s ease;"
                                                     onmouseover="this.style.backgroundColor='#e0b323'"
                                                     onmouseout="this.style.backgroundColor='#f6c23e'"><i

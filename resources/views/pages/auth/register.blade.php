@@ -46,6 +46,9 @@
                         <div class="col-sm-6">
                             <input type="password" class="form-control form-control-user" id="password_confirmation"
                                 name="password_confirmation" placeholder="Ulangi Password" required>
+                            @error(session('password_confirmation'))
+                                <div class="invalid-feedback ml-3">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
 
