@@ -8,6 +8,25 @@
             </h1>
         </div>
 
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         {{-- ... card body ... --}}
         <div class="card shadow-lg mb-4" style="border: none; border-radius: 0.75rem;">
             <div class="card-header py-3"
@@ -69,7 +88,7 @@
                                         @include('pages.account-list.confirmation-approve')
                                         @include('pages.account-list.confirmation-reject')
                                     </td>
-                                    <td class="text-center align-middle">
+                                    <td class="text-center align-middle d-flex justify-content-center">
                                         <a href="/account-list/{{ $item->id }}" class="d-inline-block mr-2 btn btn-sm"
                                             style="background-color: #f6c23e; color: #333; border: none; border-radius: 0.25rem; padding: 0.5rem 0.75rem; transition: all 0.3s ease;"
                                             onmouseover="this.style.backgroundColor='#e0b323'"

@@ -11,13 +11,14 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        if ($user->role->name == 'Admin') {
+        if (Auth::user()->role_id !== 1) {
             return back()->with('error', 'Tidak dapat menghapus akun admin.');
         }
-
+        $user = User::findOrFail($id);
         $user->delete();
+
         return back()->with('success', 'Berhasil menghapus akun ' . $user->name);
     }
 
@@ -76,7 +77,7 @@ class UserController extends Controller
 
     public function accountListView()
     {
-        $user = User::where('status', 'approved')
+        $user = User::where('role_id', '=', 2)
             ->get();
 
         return view('pages.account-list.index', [
@@ -109,27 +110,38 @@ class UserController extends Controller
                 if ($resident) {
                     $resident->user_id = $user->id;
                     $resident->save();
+                    $user->save();
+                } else {
+                    return redirect('/account-list')->with('error', 'Penduduk dengan ID tersebut tidak ditemukan.');
                 }
+            } else {
+                return redirect('/account-list')->with('error', 'ID penduduk harus disertakan untuk menyetujui akun.');
             }
         } else {
             $user->status = 'rejected';
             $message = 'Berhasil menolak akun ' . $user->name;
         }
 
-        $user->save();
 
         if ($action === 'activate') {
             $message = 'Akun berhasil diaktifkan';
+            $user->save();
+            return redirect('/account-list')->with('success', $message);
         } elseif ($action === 'deactivate') {
             $message = 'Akun berhasil dinonaktifkan';
+            $user->save();
+            return redirect('/account-list')->with('success', $message);
         } elseif ($action === 'approve') {
             $message = 'Akun berhasil disetujui';
+            $user->save();
+            return redirect('/account-request')->with('success', $message);
         } else {
             $message = 'Akun berhasil ditolak';
+            $user->save();
+            return redirect('/account-request')->with('success', $message);
         }
 
-        $user->save();
-        return back()->with('success', $message);
+
     }
 
     public function profileView()

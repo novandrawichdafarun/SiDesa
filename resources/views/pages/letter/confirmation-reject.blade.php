@@ -2,7 +2,7 @@
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="border: none; border-radius: 0.75rem;">
-            <form action="{{ route('letters-list.approval', $item->id) }}" method="POST">
+            <form action="{{ route('letters-list.rejection', $item->id) }}" method="POST">
                 @csrf
                 <div class="modal-header"
                     style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); border: none;">
@@ -17,7 +17,7 @@
                     <input type="hidden" name="status" value="rejected">
                     <div class="form-group">
                         <label class="font-weight-600 text-gray-800">Alasan Penolakan</label>
-                        <textarea name="admin_note" class="form-control" required placeholder="Masukkan alasan penolakan..."
+                        <textarea name="catatan_revisi" class="form-control" required placeholder="Masukkan alasan penolakan..."
                             style="border-radius: 0.25rem; border: 1px solid #e3e6f0;"></textarea>
                     </div>
                 </div>

@@ -110,7 +110,7 @@ class ResidentController extends Controller
         }
 
         $data = $request->validate([
-            'nik' => ['required', 'digits:16', 'unique:residents,nik', 'regex:/^35/'],
+            'nik' => ['required', 'digits:16', 'regex:/^35/'],
             'name' => ['required', 'string', 'max:100'],
             'gender' => ['required', Rule::in(['male', 'female'])],
             'birth_date' => ['required', 'date'],
@@ -126,7 +126,6 @@ class ResidentController extends Controller
         ], [
             'nik.required' => 'NIK harus diisi.',
             'nik.digits' => 'NIK harus terdiri dari 16 karakter.',
-            'nik.unique' => 'NIK sudah terdaftar.',
             'nik.regex' => 'NIK harus diawali dengan kode wilayah yang sesuai (35..).',
             'name.required' => 'Nama harus diisi.',
             'name.max' => 'Nama maksimal 100 karakter.',

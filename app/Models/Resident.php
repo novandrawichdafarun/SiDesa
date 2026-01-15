@@ -13,8 +13,20 @@ class Resident extends Model
     protected $table = 'residents';
 
     protected $fillable = [
+        'user_id',
+        'nik',
+        'name',
+        'gender',
+        'birth_date',
+        'birth_place',
+        'address',
         'rt',
-        'rw'
+        'rw',
+        'religion',
+        'marital_status',
+        'occupation',
+        'phone',
+        'status'
     ];
     protected $guarded = [];
 

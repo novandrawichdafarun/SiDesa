@@ -142,7 +142,6 @@ class LetterRequestController extends Controller
             return back()->with('error', 'Akses ditolak. Status saat ini: ' . $letter->status . ' dan Peran Anda ID: ' . $user->role_id);
         }
 
-        // 2. Tentukan Status Selanjutnya
         $nextStatus = match ($user->role_id) {
             4 => 'disetujui_rt_rw',
             1 => 'disetujui_admin',
@@ -150,9 +149,29 @@ class LetterRequestController extends Controller
             default => $letter->status
         };
 
+
         $letter->update(['status' => $nextStatus]);
 
         return redirect('/letters')->with('success', 'Status surat berhasil diperbarui menjadi ' . $request->status);
+    }
+
+    public function reject(Request $request, LetterRequest $letter)
+    {
+        $user = Auth::user();
+
+        // Cek apakah data letter benar-benar ditemukan
+        if (!$letter->exists) {
+            return back()->with('error', 'Data surat tidak ditemukan.');
+        }
+
+        // Cek apakah canApproveBy mengembalikan false
+        if (!$letter->canApproveBy($user->role_id)) {
+            return back()->with('error', 'Akses ditolak. Status saat ini: ' . $letter->status . ' dan Peran Anda ID: ' . $user->role_id);
+        }
+
+        $letter->update(['status' => 'rejected', 'catatan_revisi' => $request->catatan_revisi]);
+
+        return redirect('/letters')->with('success', 'Surat telah ditolak.');
     }
 
     public function verify($id, $hash)

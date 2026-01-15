@@ -11,7 +11,7 @@
             <div class="modal-body">
                 <p>Permohonan surat Anda ditolak dengan alasan berikut:</p>
                 <div class="alert alert-danger" role="alert">
-                    {{ $item->admin_note }}
+                    {{ $item->catatan_revisi }}
                 </div>
             </div>
             <div class="modal-footer">

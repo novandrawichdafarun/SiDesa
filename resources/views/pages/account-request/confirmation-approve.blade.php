@@ -19,7 +19,7 @@
                     <div class="form-group mt-4">
                         <label for="resident_id" class="font-weight-600 text-gray-800">Pautkan dengan Data Penduduk
                             (Opsional)</label>
-                        <select name="resident_id" class="form-control"
+                        <select name="resident_id" class="form-control @error('resident_id') is-invalid @enderror"
                             style="border-radius: 0.25rem; border: 1px solid #e3e6f0;">
                             <option value="">-- Tidak Ada --</option>
                             @foreach ($residents as $resident)
@@ -27,6 +27,11 @@
                                 </option>
                             @endforeach
                         </select>
+                        @error('resident_id')
+                            <span class="invalid-feedback mt-2">
+                                {{ $message }}
+                            </span>
+                        @enderror
                     </div>
                 </div>
                 <div class="modal-footer" style="border-top: 1px solid #e3e6f0;">
