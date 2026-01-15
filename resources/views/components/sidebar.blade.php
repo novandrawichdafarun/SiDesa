@@ -143,7 +143,7 @@
         <div class="sidebar-brand-icon mx-3">
             <img src="{{ asset('img/logo.png') }}" alt="SiDesa Logo" style="width: 50px; height: 50px;">
         </div>
-        <div class="sidebar-brand-text">
+        <div class="sidebar-brand-text text-left">
             <span class="font-weight-bold">SiDesa</span>
             <small class="d-block text-white-50 font-weight-normal">Sistem Informasi Desa Nyeni</small>
         </div>
