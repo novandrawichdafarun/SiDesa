@@ -27,7 +27,7 @@ Aplikasi ini memiliki beberapa modul utama:
 
 ## 🛠️ Teknologi yang Digunakan
 
-- **Backend:** Laravel 10/11 (PHP Framework)
+- **Backend:** Laravel 11/12 (PHP Framework)
 - **Frontend:** Blade Templating Engine
 - **UI Framework:** Bootstrap (SB Admin 2 Template)
 - **Database:** MySQL
@@ -50,7 +50,7 @@ Ikuti langkah-langkah berikut untuk menjalankan proyek di komputer lokal Anda:
 1.  **Clone Repositori**
 
     ```bash
-    git clone [https://github.com/novandrawichdafarun/sidesa.git](https://github.com/novandrawichdafarun/sidesa.git)
+    git clone https://github.com/novandrawichdafarun/sidesa.git
     cd sidesa
     ```
 
@@ -117,7 +117,7 @@ Akses aplikasi melalui browser di: `http://localhost:8000`
 Jika Anda telah menjalankan `php artisan migrate --seed`, silakan cek file `database/seeders/UserSeeder.php` untuk melihat akun default yang dibuat. Biasanya format defaultnya adalah:
 
 - **Admin:**
-    - Email: `admin@example.com` (atau cek seeder)
+    - Email: `admin@gmail.com` (atau cek seeder)
     - Password: `password`
 
 ## 📂 Struktur Proyek
